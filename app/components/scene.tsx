@@ -1207,12 +1207,15 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
           {/* Continuous bake: a single frame lands during warm-up, while every
               specimen is still scaled to 0.001, and stays empty forever. Under
               frameloop="demand" this only re-renders on already-invalidated frames. */}
+          {/* far is short on purpose: only feet and lower legs register, so
+              bodies, tails and necks overhead cannot stamp their whole
+              silhouette onto the floor — the directional light owns those. */}
           <ContactShadows
             position={[0, 0.014, 0]}
             opacity={0.34}
             scale={12.2}
             blur={2.2}
-            far={5}
+            far={0.8}
             resolution={512}
             frames={Infinity}
           />
