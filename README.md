@@ -1,6 +1,12 @@
 # react-router-gsap-transitions
 
-Parallel page transitions for React Router v8 on a shared GSAP timeline. The demo is Amber Genetics, a fictional lab archive with a React Three Fiber scene.
+> Parallel page transitions for React Router v8 on a shared GSAP timeline.
+
+[![cover](public/cover.webp)](https://amber.isma.uy/)
+
+[Live demo ↗](https://amber.isma.uy/)
+
+_The demo is **Amber Genetics**, a fictional lab archive with a React Three Fiber scene._
 
 ## Stack
 
@@ -22,4 +28,8 @@ Other scripts: `pnpm build`, `pnpm start`, `pnpm typecheck`.
 
 ## Documentation
 
-- [Repository guidelines](AGENTS.md): project conventions and instructions for contributors and agents.
+- [AGENTS.md](AGENTS.md): project conventions and instructions for contributors and agents.
+
+---
+
+<small>by [isma](https://isma.uy).</small>
