@@ -769,13 +769,15 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
     // go, and every specimen but `keep` shrinks away. Also tidies up after an
     // interrupted run, which can leave any of them half-way.
     const hideStage = (timeline: gsap.core.Timeline, position: number, keep: number[]) => {
-      timeline.to(base.position, { y: -3, duration: 0.75, ease: "power3.in" }, position);
+      // Quick exit: detail poses sit lower than the platform surface, so the
+      // base must be gone before the kept specimen's glide dips through it.
+      timeline.to(base.position, { y: -3, duration: 0.55, ease: "power2.in" }, position);
       timeline.to(
         base.scale,
-        { x: 0.3, y: 0.3, z: 0.3, duration: 0.75, ease: "power3.in" },
+        { x: 0.3, y: 0.3, z: 0.3, duration: 0.55, ease: "power2.in" },
         position,
       );
-      timeline.to(baseMaterials(), { opacity: 0, duration: 0.55, ease: "power2.in" }, position);
+      timeline.to(baseMaterials(), { opacity: 0, duration: 0.4, ease: "power2.in" }, position);
       timeline.to(labels(), { opacity: 0, duration: 0.3, ease: "power2.out" }, position);
       items.current.forEach((entry, index) => {
         if (entry && !keep.includes(index)) {
@@ -965,16 +967,19 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
           selected.current = -1;
           hideStage(timeline, position, []);
         } else if (nextPath === "/" && currentPath !== "/") {
-          timeline.to(base.position, { y: 0, duration: 0.75, ease: "power3.out" }, position + 0.15);
+          // Late entrance: the returning specimen glides in from its low
+          // detail pose, so the platform holds back until that pass is over
+          // and rises to meet the feet right at the end.
+          timeline.to(base.position, { y: 0, duration: 0.55, ease: "power3.out" }, position + 0.35);
           timeline.to(
             base.scale,
-            { x: 1, y: 1, z: 1, duration: 0.75, ease: "power3.out" },
-            position + 0.15,
+            { x: 1, y: 1, z: 1, duration: 0.55, ease: "power3.out" },
+            position + 0.35,
           );
           timeline.to(
             baseMaterials(),
-            { opacity: baseOpacity(1), duration: 0.45, ease: "power2.out" },
-            position + 0.25,
+            { opacity: baseOpacity(1), duration: 0.4, ease: "power2.out" },
+            position + 0.45,
           );
           items.current.forEach((item, index) => {
             if (!item) return;
