@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@custom-variant js (@media (scripting: enabled));
+@custom-variant no-js (@media (scripting: none));
+
+@font-face {
+  font-family: "PixelCaps";
+  src: url("/fonts/pixelcaps.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-background: #fff;
+  --color-foreground: #000;
+  --color-silver: #d1d6dc;
+  --color-steel: #a1abb5;
+  --color-muted: #52606d;
+
+  --font-display: "PixelCaps", monospace;
+  --font-mono: "Sometype Mono", monospace;
+
+  --animate-error: error 0.5s ease-out;
+  --animate-nav-blink: nav-blink 0.15s ease-out 2;
+
+  /* single flash to the specimens' emissive color, not a held hover state */
+  @keyframes nav-blink {
+    35% {
+      color: var(--color-steel);
+    }
+  }
+
+  /* overshoot, then a shake, like a system alert slamming onto the screen */
+  @keyframes error {
+    0% {
+      opacity: 0;
+      scale: 0.4;
+    }
+    30% {
+      opacity: 1;
+      scale: 1.12;
+      translate: 0;
+    }
+    45% {
+      scale: 0.96;
+      translate: -10px 0;
+    }
+    60% {
+      scale: 1.02;
+      translate: 8px 0;
+    }
+    75% {
+      translate: -5px 0;
+    }
+    90% {
+      translate: 2px 0;
+    }
+    100% {
+      scale: 1;
+      translate: 0;
+    }
+  }
+}
+
+:root {
+  --pattern-background: #f3f5f6;
+  /* silver at 15% alpha: mixed with transparent */
+  --pattern-grid: color-mix(in srgb, var(--color-silver) 15%, transparent);
+  color-scheme: light;
+}
+
+@layer base {
+  body {
+    @apply m-0 bg-background font-mono text-foreground uppercase antialiased;
+  }
+  * {
+    @apply border-foreground;
+  }
+  ::selection {
+    @apply bg-black text-white;
+  }
+}
+
+@utility bg-pattern {
+  background-color: var(--pattern-background);
+  background-image:
+    linear-gradient(var(--pattern-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--pattern-grid) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='104'%3E%3Cpath d='M26.5 18.5v16M18.5 26.5h16' stroke='%23a1abb5' stroke-opacity='.4' stroke-width='.7'/%3E%3C/svg%3E");
+  background-size:
+    26px 26px,
+    26px 26px,
+    104px 104px;
+}
+
+@utility container {
+  @apply max-w-none px-[2.5%];
+}
+
+/* incoming routes overlap while the shared timeline runs */
+[data-wrapper],
+[data-page] {
+  pointer-events: none;
+}
+
+/**
+ * First load: hides SSR markup until the intro is prepared, still pre-paint.
+ * Engine drops the attribute (`transitions/outlet.tsx`). JS only: no-JS stays readable.
+ */
+[data-page-initial] {
+  @apply js:invisible;
+}
+
+/**
+ * Incoming page: fixed to the viewport whatever the scroll; outgoing keeps its flow offset.
+ * One stacking context at the UI layer (30): content below the canvas goes through <Underlay>.
+ */
+[data-page-incoming] {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+}

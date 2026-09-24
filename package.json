@@ -1,0 +1,54 @@
+{
+  "name": "react-router-gsap-transitions",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "prepare": "simple-git-hooks"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-router/fs-routes": "8.4.0",
+    "@react-router/node": "8.4.0",
+    "@react-router/serve": "8.4.0",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
+    "@react-three/postprocessing": "^3.1.2",
+    "cn": "^0.3.2",
+    "gsap": "^3.15.0",
+    "isbot": "^5",
+    "postprocessing": "^6.39.5",
+    "react": "~19.2.8",
+    "react-dom": "~19.2.8",
+    "react-router": "8.4.0",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "@react-router/dev": "8.4.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^22",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@types/three": "^0.186.0",
+    "lint-staged": "^17.5.1",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "simple-git-hooks": "^2.14.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged --concurrent false"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "oxlint --fix",
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}

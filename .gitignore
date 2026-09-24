@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+/node_modules/
+
+# React Router
+/.react-router/
+/build/
+
+# Claude Code
+.claude/settings.local.json
+.claude/worktrees/
+
+# Vercel
+.vercel/

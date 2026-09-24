@@ -1,0 +1,24 @@
+{
+  // oxfmt via Oxc extension; same formatter as `pnpm format`
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    // oxlint --fix on save, mirrors pre-commit hook
+    "source.fixAll.oxc": "explicit",
+    // oxfmt already sorts imports; TS organizer would fight it
+    "source.organizeImports": "never"
+  },
+  // auto-imports: `./` for same folder, `@/` for the rest
+  // shortest: fewest segments, `./x` beats `@/dir/x`
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  // never `../`: with nested folders shortest could pick it over `@/`
+  "typescript.preferences.autoImportSpecifierExcludeRegexes": ["^\\.\\./"],
+  "files.associations": {
+    // @theme, @utility without warnings; needs Tailwind ext
+    "*.css": "tailwindcss"
+  },
+  // class autocompletion inside cn(...) from @/lib/utils
+  "tailwindCSS.classFunctions": ["cn"],
+  // Tailwind suggestions while typing inside className strings
+  "editor.quickSuggestions": { "strings": "on" }
+}

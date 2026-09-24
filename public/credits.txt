@@ -1,0 +1,37 @@
+Amber Genetics — MODEL CREDITS
+
+TRICERATOPS DINOSAUR
+Author: wojciechmiedziocha
+Source: https://sketchfab.com/3d-models/triceratops-dinosaur-87527079bad44917ab1b98a456b46c7e
+
+BLUE VELOCIRAPTOR
+Author: Cenker Turhan
+Source: https://sketchfab.com/3d-models/blue-velociraptor-02fa50fae031447c98e56d1710e9fbe2
+
+STEGOSAUR DINOSAUR
+Author: wojciechmiedziocha
+Source: https://sketchfab.com/3d-models/stegosaur-dinosaur-34e641dcf62c437c844156d7ad2e68b8
+
+JURASSIC WORLD DOMINION BRACHIOSAURUS
+Source file supplied by the project owner; attribution metadata pending.
+
+TYRANNOSAURUS REX
+Source file supplied by the project owner; attribution metadata pending.
+
+REAL-TIME REFRACTION DEMO — MOSQUITO IN AMBER
+Source file supplied by the project owner; attribution metadata pending.
+
+Triceratops, velociraptor and stegosaurus: Creative Commons Attribution 4.0 International (CC BY 4.0).
+https://creativecommons.org/licenses/by/4.0/
+
+Modifications (all six models): GLB scene optimization and Meshopt geometry compression;
+textures resized to a maximum of 1024 px and encoded as WebP.
+Displayed with normalized scale/orientation and a custom blue radiographic
+material preserving color and normal-map detail. No skeletal anatomy added.
+
+Amber Genetics is a fictional laboratory demo.
+Specimen variants and genetic records are invented.
+
+UI DESIGN INSPIRATION
+Jurassic World: Hidden Lab UI by Rudy Vessup
+https://www.rudyvessup.com/jurassic-world-hidden-lab-ui
