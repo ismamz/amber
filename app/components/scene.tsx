@@ -55,6 +55,11 @@ type SceneTransition = {
 };
 
 const urls = models.map((model) => model.url);
+// Specimen groups rest at REST_Y, the height every transition was tuned
+// around. The fitted clone sits SEAT below its group's origin instead, so the
+// feet meet the platform surface while the group paths never dip near it.
+const REST_Y = 0.06;
+const SEAT = 0.04;
 // ContactShadows bakes whatever its layer-0 camera sees; the amber lives on
 // this layer so the bake skips it (it casts no shadow by design).
 const UNSHADOWED_LAYER = 1;
@@ -323,7 +328,7 @@ function Specimen({
         root.current = node;
         setRef(node);
       }}
-      position={[Math.sin(angle) * 4.95, 0.06, Math.cos(angle) * 4.95]}
+      position={[Math.sin(angle) * 4.95, REST_Y, Math.cos(angle) * 4.95]}
       rotation={[0, angle - 0.95, 0]}
       onClick={(event) => {
         event.stopPropagation();
@@ -548,7 +553,8 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
           models[index].maxHeight / size.y,
         );
         clone.position.sub(
-          new Vector3(center.x, box.min.y, center.z + size.z * models[index].pivot),
+          // SEAT is a world distance; the clone offset scales with the fit.
+          new Vector3(center.x, box.min.y + SEAT / scale, center.z + size.z * models[index].pivot),
         );
         group.scale.setScalar(scale);
         group.userData.height = size.y * scale;
@@ -664,20 +670,26 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
       });
       platform.rotation.y = angle;
     };
+    // The set includes the contact shadow's material, whose resting opacity is
+    // well under 1: every fade scales each material's own design opacity, kept
+    // in userData on first sight, or the shadow bake comes back near black.
     const baseMaterials = () => {
       const materials = new Set<Material>();
       base.traverse((child) => {
         if (!(child instanceof Mesh)) return;
-        (Array.isArray(child.material) ? child.material : [child.material]).forEach((material) =>
-          materials.add(material),
-        );
+        (Array.isArray(child.material) ? child.material : [child.material]).forEach((material) => {
+          material.userData.opacity ??= material.opacity;
+          materials.add(material);
+        });
       });
       return [...materials];
     };
-    const setBaseOpacity = (opacity: number) => {
+    const baseOpacity = (fraction: number) => (_: number, material: Material) =>
+      fraction * (material.userData.opacity as number);
+    const setBaseOpacity = (fraction: number) => {
       baseMaterials().forEach((material) => {
         material.transparent = true;
-        material.opacity = opacity;
+        material.opacity = fraction * (material.userData.opacity as number);
       });
     };
     const applyDetail = (index: number) => {
@@ -713,7 +725,7 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
       items.current.forEach((item, index) => {
         if (!item) return;
         const target = homeTransform(index);
-        item.position.set(target.x, 0.06, target.z);
+        item.position.set(target.x, REST_Y, target.z);
         item.rotation.y = target.rotation;
         item.scale.setScalar(1);
       });
@@ -793,7 +805,7 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
       timeline.to(base.scale, { x: 1, y: 1, z: 1, duration: 0.9, ease: "power3.out" }, position);
       timeline.to(
         baseMaterials(),
-        { opacity: 1, duration: 0.5, ease: "power2.out" },
+        { opacity: baseOpacity(1), duration: 0.5, ease: "power2.out" },
         position + 0.1,
       );
       items.current.forEach((item, index) => {
@@ -961,7 +973,7 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
           );
           timeline.to(
             baseMaterials(),
-            { opacity: 1, duration: 0.45, ease: "power2.out" },
+            { opacity: baseOpacity(1), duration: 0.45, ease: "power2.out" },
             position + 0.25,
           );
           items.current.forEach((item, index) => {
@@ -972,7 +984,7 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
               item.position,
               {
                 x: target.x,
-                y: 0.06,
+                y: REST_Y,
                 z: target.z,
                 duration: 0.9,
                 ease: "power3.inOut",
@@ -1187,14 +1199,17 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
             <ringGeometry args={[6.14, 6.17, 128]} />
             <meshStandardMaterial color="#f8fbfc" roughness={0.24} metalness={0.22} />
           </mesh>
+          {/* Continuous bake: a single frame lands during warm-up, while every
+              specimen is still scaled to 0.001, and stays empty forever. Under
+              frameloop="demand" this only re-renders on already-invalidated frames. */}
           <ContactShadows
-            position={[0, 0.025, 0]}
+            position={[0, 0.014, 0]}
             opacity={0.34}
             scale={12.2}
             blur={2.2}
             far={5}
             resolution={512}
-            frames={1}
+            frames={Infinity}
           />
         </group>
         {specimens.map((specimen, index) => (
