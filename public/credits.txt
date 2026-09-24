@@ -1,4 +1,9 @@
-Amber Genetics — MODEL CREDITS
+Amber Genetics by Ismael Martínez — https://isma.uy
+
+Amber Genetics is a fictional laboratory demo.
+Specimen variants and genetic records are invented.
+
+MODEL CREDITS
 
 TRICERATOPS DINOSAUR
 Author: wojciechmiedziocha
@@ -13,15 +18,18 @@ Author: wojciechmiedziocha
 Source: https://sketchfab.com/3d-models/stegosaur-dinosaur-34e641dcf62c437c844156d7ad2e68b8
 
 JURASSIC WORLD DOMINION BRACHIOSAURUS
-Source file supplied by the project owner; attribution metadata pending.
+Author: Yea
+Source: https://sketchfab.com/3d-models/jurassic-world-dominion-brachiomsfs2024orbx-6fedade36c594572a52f43a19683601e
 
 TYRANNOSAURUS REX
-Source file supplied by the project owner; attribution metadata pending.
+Author: DanielWalsh
+Source: https://sketchfab.com/3d-models/tyrannosaurus-rex-497a7f22e77a4678b173fb511bea6064
 
 REAL-TIME REFRACTION DEMO — MOSQUITO IN AMBER
-Source file supplied by the project owner; attribution metadata pending.
+Author: Loïc Norgeot (original); demo published by Sketchfab
+Source: https://sketchfab.com/3d-models/real-time-refraction-demo-mosquito-in-amber-37233d6ed84844fea1ebe88069ea58d1
 
-Triceratops, velociraptor and stegosaurus: Creative Commons Attribution 4.0 International (CC BY 4.0).
+All six models: Creative Commons Attribution 4.0 International (CC BY 4.0).
 https://creativecommons.org/licenses/by/4.0/
 
 Modifications (all six models): GLB scene optimization and Meshopt geometry compression;
@@ -29,8 +37,13 @@ textures resized to a maximum of 1024 px and encoded as WebP.
 Displayed with normalized scale/orientation and a custom blue radiographic
 material preserving color and normal-map detail. No skeletal anatomy added.
 
-Amber Genetics is a fictional laboratory demo.
-Specimen variants and genetic records are invented.
+FONTS
+
+PIXELCAPS!
+Author: Markus Koellmann
+Source: https://www.markuskoellmann.com
+License: Freeware — free for personal and commercial use; font file may not be modified, renamed, sold, or redistributed separately.
+Copyright (c) 2016 Markus Koellmann
 
 UI DESIGN INSPIRATION
 Jurassic World: Hidden Lab UI by Rudy Vessup
