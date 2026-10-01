@@ -31,6 +31,7 @@ import {
   type PerspectiveCamera,
 } from "three";
 
+import { AmberIcon } from "@/components/logo";
 import { landing, lean, leanTilt, snap, spin, useArchive } from "@/lib/archive";
 import { radiograph } from "@/lib/radiograph";
 import { sceneReady } from "@/lib/scene";
@@ -172,14 +173,19 @@ function Loader({ stage }: { stage: RefObject<HTMLCanvasElement | null> }) {
   if (done) return null;
   return (
     <div ref={root} className="pointer-events-none absolute inset-0 grid place-content-center">
-      <div className="flex items-baseline gap-4 font-display text-[10px] leading-none">
-        <p role="status" className="tracking-[0.2em] whitespace-nowrap">
-          Loading specimens
-        </p>
-        {/* Hidden from readers: a value that changes every frame would drown the status. */}
-        <p aria-hidden="true" className="text-muted tabular-nums">
-          <span ref={count}>000</span>%
-        </p>
+      <div className="flex flex-col items-center gap-6 font-display text-[10px] leading-none">
+        <div className="loader-amber" aria-hidden="true">
+          <AmberIcon className="h-10 sm:h-11" />
+        </div>
+        <div className="flex items-baseline gap-4">
+          <p role="status" className="tracking-[0.2em] whitespace-nowrap">
+            Loading specimens
+          </p>
+          {/* Hidden from readers: a value that changes every frame would drown the status. */}
+          <p aria-hidden="true" className="text-muted tabular-nums">
+            <span ref={count}>000</span>%
+          </p>
+        </div>
       </div>
     </div>
   );

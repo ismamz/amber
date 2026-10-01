@@ -61,6 +61,51 @@
       translate: 0;
     }
   }
+
+  @keyframes loader-dim {
+    0%,
+    100% {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px rgb(231 163 25 / 35%));
+    }
+    50% {
+      opacity: 0.45;
+      filter: drop-shadow(0 0 3px rgb(231 163 25 / 15%));
+    }
+  }
+
+  @keyframes logo-dim {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+}
+
+.loader-amber {
+  animation: loader-dim 0.8s ease-in-out infinite;
+}
+
+.logo-link:hover .logo-amber {
+  animation: logo-dim 0.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 7px rgb(231 163 25 / 35%));
+}
+
+.logo-amber {
+  transition: filter 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-link:hover .logo-amber {
+    animation: none;
+    transition: none;
+  }
+  .loader-amber {
+    animation: none;
+  }
 }
 
 :root {
