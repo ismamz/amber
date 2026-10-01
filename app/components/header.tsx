@@ -1,16 +1,24 @@
-import { memo } from "react";
+import { memo, useSyncExternalStore } from "react";
 import { Link } from "react-router";
 
 import { GithubIcon } from "@/components/icons/github";
 import { Logo } from "@/components/logo";
+import { sceneReady } from "@/lib/scene";
 
 export const Header = memo(function Header() {
+  const ready = useSyncExternalStore(
+    sceneReady.subscribe,
+    () => sceneReady.settled,
+    () => false,
+  );
+
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-40 container flex items-center justify-between pt-6 sm:pt-8">
       <Link
         to="/"
         aria-label="Amber Genetics"
-        className="pointer-events-auto block transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 motion-reduce:transition-none"
+        tabIndex={ready ? undefined : -1}
+        className={`logo-link pointer-events-auto block focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none ${ready ? "opacity-100" : "pointer-events-none opacity-0"}`}
       >
         <Logo className="gap-1.5 sm:gap-2 [&>span]:text-[0.8rem] sm:[&>span]:text-base [&>svg]:h-7 sm:[&>svg]:h-9" />
       </Link>
