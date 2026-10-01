@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 
+import { specimenIndex } from "@/lib/specimens";
 import type { AnimatedOutletProps } from "@/transitions";
 
 export const config = {
@@ -101,10 +102,16 @@ export const config = {
       leaveEnd("titles"),
       initial ? at(next.pathname === "/" ? 0.45 : 0.3) : 0,
     );
+    const betweenDetails =
+      specimenIndex(current.pathname) >= 0 && specimenIndex(next.pathname) >= 0;
+    const identityStart = betweenDetails
+      ? Math.max(entranceStart, leaveEnd("identity") - at(0.25))
+      : entranceStart + at(0.2);
     tl.addLabel("exit-end", exitEnd);
     tl.addLabel("scene-start", sceneStart);
     tl.addLabel("entrance-start", entranceStart);
     tl.addLabel("title-start", titleStart);
+    tl.addLabel("identity-start", identityStart);
 
     if (incomingLines.length) {
       tl.to(
