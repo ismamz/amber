@@ -20,7 +20,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   return (
     <div className="relative isolate min-h-svh overflow-hidden bg-pattern">
-      <Header />
+      <Header showLogo />
       <Notice title={message}>
         {stack && (
           <pre className="mt-8 max-w-[90vw] overflow-x-auto text-left text-xs normal-case">

@@ -5,12 +5,13 @@ import { GithubIcon } from "@/components/icons/github";
 import { Logo } from "@/components/logo";
 import { sceneReady } from "@/lib/scene";
 
-export const Header = memo(function Header() {
-  const ready = useSyncExternalStore(
+export const Header = memo(function Header({ showLogo = false }: { showLogo?: boolean }) {
+  const sceneIsReady = useSyncExternalStore(
     sceneReady.subscribe,
     () => sceneReady.settled,
     () => false,
   );
+  const ready = showLogo || sceneIsReady;
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-40 container flex items-center justify-between pt-6 sm:pt-8">
