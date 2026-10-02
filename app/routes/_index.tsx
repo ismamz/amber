@@ -1,4 +1,4 @@
-import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
+import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
 import { useRef } from "react";
 import { Link } from "react-router";
 

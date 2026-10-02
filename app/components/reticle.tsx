@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { usePageTransition } from "@ismamz/react-router-choreo";
+import { usePageTransition } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
 import { useRef } from "react";
 

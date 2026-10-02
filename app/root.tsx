@@ -1,4 +1,4 @@
-import { AnimatedOutlet, useTransitionResource } from "@ismamz/react-router-choreo";
+import { AnimatedOutlet, useTransitionResource } from "@ismamz/hyperkinetic";
 import { lazy, Suspense } from "react";
 import { Links, Meta, Scripts } from "react-router";
 

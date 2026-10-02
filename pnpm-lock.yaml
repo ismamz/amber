@@ -11,9 +11,9 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.8)
-      '@ismamz/react-router-choreo':
-        specifier: github:ismamz/react-router-choreo#b64179a6d84cafc7668e1474bbb3b88c25d6a51d
-        version: git+https://github.com/ismamz/react-router-choreo.git#b64179a6d84cafc7668e1474bbb3b88c25d6a51d(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+      '@ismamz/hyperkinetic':
+        specifier: github:ismamz/hyperkinetic#94127f5f7102895d969c7c1d56c8abe1541d8893
+        version: git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@react-router/fs-routes':
         specifier: 8.4.0
         version: 8.4.0(@react-router/dev@8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3))(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3)(vite@8.0.13(@types/node@22.19.19)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1)))(typescript@5.9.3)
@@ -344,8 +344,8 @@ packages:
       gsap: ^3.12.5
       react: '>=17'
 
-  '@ismamz/react-router-choreo@git+https://github.com/ismamz/react-router-choreo.git#b64179a6d84cafc7668e1474bbb3b88c25d6a51d':
-    resolution: {commit: b64179a6d84cafc7668e1474bbb3b88c25d6a51d, repo: https://github.com/ismamz/react-router-choreo.git, type: git}
+  '@ismamz/hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893':
+    resolution: {commit: 94127f5f7102895d969c7c1d56c8abe1541d8893, repo: https://github.com/ismamz/hyperkinetic.git, type: git}
     version: 0.1.0-alpha.0
     peerDependencies:
       gsap: ^3.15.0
@@ -2145,7 +2145,7 @@ snapshots:
       gsap: 3.15.0
       react: 19.2.8
 
-  '@ismamz/react-router-choreo@git+https://github.com/ismamz/react-router-choreo.git#b64179a6d84cafc7668e1474bbb3b88c25d6a51d(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
+  '@ismamz/hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
     dependencies:
       gsap: 3.15.0
       react: 19.2.8

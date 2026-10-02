@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { useEnterReady } from "@ismamz/react-router-choreo";
+import { useEnterReady } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
 import { useRef } from "react";
 

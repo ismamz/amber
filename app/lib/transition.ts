@@ -1,4 +1,4 @@
-import type { AnimatedOutletProps } from "@ismamz/react-router-choreo";
+import type { AnimatedOutletProps } from "@ismamz/hyperkinetic";
 import { gsap } from "gsap";
 
 import { specimenIndex } from "@/lib/specimens";

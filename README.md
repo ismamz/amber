@@ -28,7 +28,7 @@ Other scripts: `pnpm build`, `pnpm start`, `pnpm typecheck`, `pnpm lint`, `pnpm 
 
 ## How the demo is wired
 
-Every navigation builds one paused GSAP timeline. Both pages stay mounted as siblings while it plays: the outgoing one is `inert`, the incoming one is `fixed` above the canvas. The engine is [`@ismamz/react-router-choreo`](https://github.com/ismamz/react-router-choreo), pinned to a commit in `package.json`; its README documents the API, the order of a run and its limits. `pnpm install` builds it from GitHub through its `prepare` script, which the allowlist in `pnpm-workspace.yaml` permits.
+Every navigation builds one paused GSAP timeline. Both pages stay mounted as siblings while it plays: the outgoing one is `inert`, the incoming one is `fixed` above the canvas. The engine is [`@ismamz/hyperkinetic`](https://github.com/ismamz/hyperkinetic), pinned to a commit in `package.json`; its README documents the API, the order of a run and its limits. `pnpm install` builds it from GitHub through its `prepare` script, which the allowlist in `pnpm-workspace.yaml` permits.
 
 Amber's integration is in a few files:
 
