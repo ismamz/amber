@@ -39,7 +39,7 @@ React Router v8 kit for parallel page transitions on one shared GSAP timeline, p
 
 Scripts live in `package.json`. `pnpm typecheck` runs `react-router typegen` first; `pnpm format` (oxfmt) also sorts imports and Tailwind classes. The pre-commit hook runs `oxlint --fix` and `oxfmt` on staged files.
 
-No test runner. After a change to `app/transitions/`, `app/lib/transition.ts` or the scene bridge, validate with the `validate-transitions` skill (`.claude/skills/validate-transitions/SKILL.md`). The skill and the harnesses it runs (`tests/`) are local and untracked; skip this step when they are absent.
+No test runner. After bumping `@ismamz/react-router-choreo`, or a change to `app/lib/transition.ts` or the scene bridge, validate with the `validate-transitions` skill (`.claude/skills/validate-transitions/SKILL.md`). The skill and the harnesses it runs (`tests/`) are local and untracked; skip this step when they are absent.
 
 ## Local drafts
 
@@ -64,13 +64,12 @@ app/
 ├── components/    scene (R3F), archive input, specimen UI, mask, underlay, icons
 ├── lib/           site: transition.ts (choreography + fallback), scene.ts (scene
 │                  readiness), archive.ts (carousel state), specimens.ts, eases.ts
-├── transitions/   engine
 └── root.tsx       app shell: canvas + <AnimatedOutlet>
 ```
 
 ## Transition engine
 
-One paused `gsap.core.Timeline` per navigation. The global choreography, every component recipe and the configured fallback write tweens onto it; the engine plays it, awaits it, then unmounts the outgoing page. API and data shapes: `app/transitions/types.ts`.
+One paused `gsap.core.Timeline` per navigation. The global choreography, every component recipe and the configured fallback write tweens onto it; the engine plays it, awaits it, then unmounts the outgoing page. The engine is `@ismamz/react-router-choreo`, pinned to a commit in `package.json`; API and data shapes in its README and `dist/types.d.ts`.
 
 Both pages render as siblings inside `[data-wrapper]` during the swap:
 
