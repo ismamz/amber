@@ -1,8 +1,8 @@
+import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
 import gsap from "gsap";
 import { Fragment, useRef } from "react";
 
 import { cascade } from "@/lib/reveal";
-import { usePageTransition, type PageAnimationData } from "@/transitions";
 
 // Claiming the scope opts each row out of the fallback's autoAlpha reveal, so
 // the row (label, track, value) has to fade in/out itself, same as it would

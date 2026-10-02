@@ -1,3 +1,4 @@
+import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
 import { useRef } from "react";
 import { Link } from "react-router";
 
@@ -8,7 +9,6 @@ import { useArchive } from "@/lib/archive";
 import { animateCaption } from "@/lib/reveal";
 import { specimens } from "@/lib/specimens";
 import { pad } from "@/lib/utils";
-import { usePageTransition, type PageAnimationData } from "@/transitions";
 
 export function meta() {
   return [

@@ -1,9 +1,9 @@
+import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
 import gsap from "gsap";
 import { useRef } from "react";
 
 import { cascade } from "@/lib/reveal";
 import { cn } from "@/lib/utils";
-import { usePageTransition, type PageAnimationData } from "@/transitions";
 
 import { Genome } from "./genome";
 

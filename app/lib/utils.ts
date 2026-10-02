@@ -1,12 +1,8 @@
-import { useEffect, useLayoutEffect, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 
 export { cn } from "cn";
 
 export const pad = (value: number, length = 2) => String(value).padStart(length, "0");
-
-// useLayoutEffect on the client, useEffect on the server (no warnings). For
-// work that must run before paint but also renders server-side.
-export const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const subscribe = () => () => {};
 

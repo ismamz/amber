@@ -1,9 +1,9 @@
 import { useGSAP } from "@gsap/react";
+import { usePageTransition } from "@ismamz/react-router-choreo";
 import gsap from "gsap";
 import { useRef } from "react";
 
 import { specimenIndex } from "@/lib/specimens";
-import { usePageTransition } from "@/transitions";
 
 import { ReticleIcon } from "./icons/reticle";
 

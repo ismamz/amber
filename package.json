@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@ismamz/react-router-choreo": "github:ismamz/react-router-choreo#b64179a6d84cafc7668e1474bbb3b88c25d6a51d",
     "@react-router/fs-routes": "8.4.0",
     "@react-router/node": "8.4.0",
     "@react-router/serve": "8.4.0",
