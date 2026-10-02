@@ -7,10 +7,6 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
-  server: {
-    // agent worktrees build in-root; html output triggers full dev reload
-    watch: { ignored: ["**/.claude/**"] },
-  },
   build: {
     target: "esnext",
     cssMinify: "lightningcss",
