@@ -1,4 +1,6 @@
 // oxlint-disable react/immutability, react/refs
+
+import { usePersistentTransition } from "@ismamz/react-router-choreo";
 import { ContactShadows, Html, useGLTF, useProgress } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, ToneMapping, wrapEffect } from "@react-three/postprocessing";
@@ -37,7 +39,6 @@ import { radiograph } from "@/lib/radiograph";
 import { sceneReady } from "@/lib/scene";
 import { indexAt, models, specimenIndex, specimens, step } from "@/lib/specimens";
 import { pad } from "@/lib/utils";
-import { usePersistentTransition } from "@/transitions";
 
 // The platform's navigation moves live inside a layout effect, next to the
 // transforms and materials they read. The ref hands them to the persistent

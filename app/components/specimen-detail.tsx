@@ -2,11 +2,11 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
+import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
 import { useLayoutEffect, useRef } from "react";
 
 import { specimens } from "@/lib/specimens";
 import { cn } from "@/lib/utils";
-import { usePageTransition, type PageAnimationData } from "@/transitions";
 
 import { BarcodeIcon } from "./icons/barcode";
 import { Mask } from "./mask";

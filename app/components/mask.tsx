@@ -2,11 +2,11 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
+import { usePageTransition, type PageAnimationData } from "@ismamz/react-router-choreo";
 import { useLayoutEffect, useRef } from "react";
 
 import { animateMask } from "@/lib/reveal";
 import { cn } from "@/lib/utils";
-import { usePageTransition, type PageAnimationData } from "@/transitions";
 
 type Props = {
   as?: "h1" | "p";

@@ -1,3 +1,4 @@
+import { AnimatedOutlet, useTransitionResource } from "@ismamz/react-router-choreo";
 import { lazy, Suspense } from "react";
 import { Links, Meta, Scripts } from "react-router";
 
@@ -7,7 +8,6 @@ import { UnderlaySlot } from "@/components/underlay";
 import { sceneReady } from "@/lib/scene";
 import { config as transition } from "@/lib/transition";
 import { useHydrated } from "@/lib/utils";
-import { AnimatedOutlet, useTransitionResource } from "@/transitions";
 
 import type { Route } from "./+types/root";
 import "@/lib/eases";

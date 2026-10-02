@@ -1,9 +1,9 @@
 import { useGSAP } from "@gsap/react";
+import { useEnterReady } from "@ismamz/react-router-choreo";
 import gsap from "gsap";
 import { useRef } from "react";
 
 import { cn } from "@/lib/utils";
-import { useEnterReady } from "@/transitions";
 
 import { ChromatogramIcon } from "./icons/chromatogram";
 

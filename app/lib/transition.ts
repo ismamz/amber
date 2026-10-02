@@ -1,7 +1,7 @@
+import type { AnimatedOutletProps } from "@ismamz/react-router-choreo";
 import { gsap } from "gsap";
 
 import { specimenIndex } from "@/lib/specimens";
-import type { AnimatedOutletProps } from "@/transitions";
 
 export const config = {
   before: () => {
