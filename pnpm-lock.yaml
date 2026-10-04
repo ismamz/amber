@@ -11,9 +11,6 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.8)
-      '@ismamz/hyperkinetic':
-        specifier: github:ismamz/hyperkinetic#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0
-        version: hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@react-router/fs-routes':
         specifier: 8.4.0
         version: 8.4.0(@react-router/dev@8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3))(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3)(vite@8.0.13(@types/node@22.19.19)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1)))(typescript@5.9.3)
@@ -38,6 +35,9 @@ importers:
       gsap:
         specifier: ^3.15.0
         version: 3.15.0
+      hyperkinetic:
+        specifier: 0.1.0-alpha.0
+        version: 0.1.0-alpha.0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       isbot:
         specifier: ^5
         version: 5.1.40
@@ -1272,9 +1272,8 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
-  hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0:
-    resolution: {commit: 2f7f3af6833daa2862a0e3a9c6b24acc5851bba0, repo: https://github.com/ismamz/hyperkinetic.git, type: git}
-    version: 0.1.0-alpha.0
+  hyperkinetic@0.1.0-alpha.0:
+    resolution: {integrity: sha512-khim2MgOPLhxEeFzywDr9enWal75AHgPpF6mBpNpND11nJeVAA/WYbrsxBV+QJqrxLIM3IJE6bGCe+meCCAHQQ==}
     peerDependencies:
       gsap: ^3.15.0
       react: ~19.2.8
@@ -2926,7 +2925,7 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8):
+  hyperkinetic@0.1.0-alpha.0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8):
     dependencies:
       gsap: 3.15.0
       react: 19.2.8

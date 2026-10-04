@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
-    "@ismamz/hyperkinetic": "github:ismamz/hyperkinetic#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0",
     "@react-router/fs-routes": "8.4.0",
     "@react-router/node": "8.4.0",
     "@react-router/serve": "8.4.0",
@@ -23,6 +22,7 @@
     "@react-three/postprocessing": "^3.1.2",
     "cn": "^0.3.2",
     "gsap": "^3.15.0",
+    "hyperkinetic": "0.1.0-alpha.0",
     "isbot": "^5",
     "postprocessing": "^6.39.5",
     "react": "~19.2.8",

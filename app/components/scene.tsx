@@ -1,10 +1,10 @@
 // oxlint-disable react/immutability, react/refs
 
-import { usePersistentTransition } from "@ismamz/hyperkinetic";
 import { ContactShadows, Html, useGLTF, useProgress } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { EffectComposer, ToneMapping, wrapEffect } from "@react-three/postprocessing";
 import gsap from "gsap";
+import { usePersistentTransition } from "hyperkinetic";
 import { BokehEffect, Effect, ToneMappingMode } from "postprocessing";
 import {
   Component,

@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
-import { usePageTransition } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
+import { usePageTransition } from "hyperkinetic";
 import { useRef } from "react";
 
 import { specimenIndex } from "@/lib/specimens";

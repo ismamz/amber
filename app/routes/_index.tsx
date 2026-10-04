@@ -1,6 +1,6 @@
-import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { usePageTransition, type PageAnimationData } from "hyperkinetic";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router";
 

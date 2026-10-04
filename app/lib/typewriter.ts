@@ -1,6 +1,6 @@
-import { usePageTransition } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
+import { usePageTransition } from "hyperkinetic";
 import { useLayoutEffect, type RefObject } from "react";
 
 gsap.registerPlugin(SplitText);
