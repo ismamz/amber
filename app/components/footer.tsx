@@ -9,7 +9,8 @@ export function Footer() {
             Design inspiration
           </Link>
           <p>
-            Design & code by <Link href="https://isma.uy">isma</Link>
+            Design & code by <Link href="https://isma.uy">isma</Link> with{" "}
+            <Link href="https://github.com/ismamz/hyperkinetic">Hyperkinetic</Link>
           </p>
         </div>
       </div>
