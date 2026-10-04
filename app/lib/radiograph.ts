@@ -7,8 +7,8 @@ type Surface = {
   lift: number;
 };
 
-// Keep the source PBR maps and convert only their albedo to a cool monochrome.
-// Lighting, roughness and normal maps remain part of the standard PBR response.
+// Converts only the albedo to a cool monochrome. Lighting, roughness and
+// normal maps keep the standard PBR response.
 export function radiograph(source: MeshStandardMaterial, surface: Surface) {
   const material = source.clone();
   material.color.set("#f2f7fa");

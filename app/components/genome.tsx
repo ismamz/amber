@@ -1,4 +1,11 @@
+import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
+import gsap from "gsap";
+import { useRef } from "react";
+
+import { cascade } from "@/lib/reveal";
 import { pad } from "@/lib/utils";
+
+import { Line } from "./line";
 
 const locusSets = [
   ["Regulatory", "Hybrid splice", "Horn morph"],
@@ -22,7 +29,36 @@ function GenomeBar({ column }: { column: number }) {
 }
 
 export function Genome({ model }: { model: number }) {
+  const scope = useRef<HTMLDivElement>(null);
   const loci = locusSets[model];
+
+  const animate = (
+    tl: gsap.core.Timeline,
+    { position, reduced }: PageAnimationData,
+    entering: boolean,
+  ) => {
+    const columns = gsap.utils.toArray<HTMLElement>("[data-genome-column]");
+    columns.forEach((column, index) => {
+      const { start, ...timing } = cascade(position, index, columns.length, entering, reduced);
+      tl.to(
+        column,
+        {
+          autoAlpha: entering ? 1 : 0,
+          ...timing,
+          ...(entering ? { clearProps: "opacity,visibility" } : {}),
+        },
+        start,
+      );
+    });
+  };
+
+  usePageTransition({
+    scope,
+    enterAt: "entrance-start",
+    prepare: () => gsap.set("[data-genome-column]", { autoAlpha: 0 }),
+    leave: (tl, data) => animate(tl, data, false),
+    enter: (tl, data) => animate(tl, data, true),
+  });
 
   return (
     <div className="relative flex flex-col pl-13 sm:pl-25">
@@ -34,18 +70,18 @@ export function Genome({ model }: { model: number }) {
           </div>
         ))}
       </div>
-      <div className="relative grid min-h-0 flex-1 grid-cols-4 gap-2 sm:gap-5">
-        {[100 / 6, 50, 500 / 6].map((top) => (
-          <span
+      <div ref={scope} className="relative grid min-h-0 flex-1 grid-cols-4 gap-2 sm:gap-5">
+        {[100 / 6, 50, 500 / 6].map((top, index) => (
+          <Line
             key={top}
-            data-transition-line=""
-            aria-hidden="true"
+            index={index + 1}
+            total={5}
             className="absolute right-0 left-0 z-0 border-t border-dashed border-steel/70"
             style={{ top: `${top}%` }}
           />
         ))}
         {[1, 2, 3, 4].map((column) => (
-          <div key={column} className="flex min-h-0 flex-col">
+          <div key={column} data-genome-column="" className="flex min-h-0 flex-col">
             <p className="mb-2 text-center text-[9px]">{pad(column)}</p>
             <GenomeBar column={column} />
           </div>

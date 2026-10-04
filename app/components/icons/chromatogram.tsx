@@ -12,14 +12,11 @@ export function ChromatogramIcon({
         return (
           <path
             key={`secondary-${index}`}
-            data-chromatogram
-            pathLength="1"
             d={`M ${center - 58} 88 Q ${center - 24} 88 ${center} ${peak} Q ${center + 24} 88 ${center + 58} 88`}
             fill="none"
             stroke="currentColor"
             strokeOpacity="0.38"
             strokeWidth="1"
-            style={{ strokeDasharray: "1 1", strokeDashoffset: 1 }}
             vectorEffect="non-scaling-stroke"
           />
         );
@@ -29,13 +26,10 @@ export function ChromatogramIcon({
         return (
           <path
             key={`primary-${index}`}
-            data-chromatogram
-            pathLength="1"
             d={`M ${center - 52} 88 Q ${center - 22} 88 ${center} ${peak} Q ${center + 22} 88 ${center + 52} 88`}
             fill="none"
             stroke="currentColor"
             strokeWidth="1"
-            style={{ strokeDasharray: "1 1", strokeDashoffset: 1 }}
             vectorEffect="non-scaling-stroke"
           />
         );

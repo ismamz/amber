@@ -1,10 +1,8 @@
-import { usePageTransition } from "@ismamz/hyperkinetic";
-import gsap from "gsap";
 import { useRef } from "react";
 import { Link } from "react-router";
 
 import { specimens } from "@/lib/specimens";
-import { config } from "@/lib/transition";
+import { useStill } from "@/lib/still";
 import { pad } from "@/lib/utils";
 
 import { Arrow } from "./icons/arrow";
@@ -16,25 +14,7 @@ export function Pager({ specimen }: { specimen: Specimen }) {
   const index = specimens.indexOf(specimen);
   const at = (offset: number) => specimens[(index + offset + specimens.length) % specimens.length];
 
-  usePageTransition({
-    scope,
-    enterAt: config.fallback.enterAt,
-    prepare: (data) => {
-      gsap.set(scope.current, { autoAlpha: data.initial || data.current.pathname === "/" ? 0 : 1 });
-    },
-    leave: (tl, data) => {
-      if (data.next.pathname === "/") {
-        config.fallback.leave(tl, { ...data, targets: [scope.current!] });
-      } else {
-        tl.set(scope.current, { autoAlpha: 0 }, data.position);
-      }
-    },
-    enter: (tl, data) => {
-      if (data.initial || data.current.pathname === "/") {
-        config.fallback.enter(tl, { ...data, targets: [scope.current!] });
-      }
-    },
-  });
+  useStill(scope);
 
   return (
     <nav

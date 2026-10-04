@@ -1,6 +1,6 @@
 import { AnimatedOutlet, useTransitionResource } from "@ismamz/hyperkinetic";
-import { lazy, Suspense } from "react";
-import { Links, Meta, Scripts } from "react-router";
+import { lazy, Suspense, useState } from "react";
+import { Links, Meta, Scripts, useLocation } from "react-router";
 
 import { Archive } from "@/components/archive";
 import { Header } from "@/components/header";
@@ -66,6 +66,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 // default, it can be named `Root` if you want
 export default function App() {
   const hydrated = useHydrated();
+  const { search } = useLocation();
+  // Keep debugging across links that omit the query; reload without it to stop.
+  const [debug] = useState(() => import.meta.env.DEV && new URLSearchParams(search).has("debug"));
 
   // hold transitions until scene can draw
   // declared here: lazy scene mounts too late for first run
@@ -84,7 +87,10 @@ export default function App() {
         </Suspense>
       ) : null}
 
-      <AnimatedOutlet {...transition} />
+      <AnimatedOutlet
+        {...transition}
+        debug={debug ? { devTools: true, retainPages: true } : undefined}
+      />
     </Archive>
   );
 }

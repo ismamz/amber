@@ -17,7 +17,7 @@ type Props = {
   total?: number;
 };
 
-export function Mask({
+export function Title({
   as: Tag = "p",
   children,
   className,

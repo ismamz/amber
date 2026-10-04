@@ -42,8 +42,8 @@ export function Magic({ dialog }: { dialog: RefObject<HTMLDialogElement | null> 
     { scope: screen },
   );
 
-  // React's onToggle doesn't fire for <dialog>, so listen natively. Pausing
-  // rather than reverting keeps the text on screen while the window closes.
+  // React's onToggle doesn't fire for <dialog>, so listen natively.
+  // Pause, don't revert: the text stays on screen while the window closes.
   useEffect(() => {
     const node = dialog.current;
     if (!node) return;

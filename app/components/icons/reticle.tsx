@@ -27,8 +27,8 @@ export function ReticleIcon(props: SVGProps<SVGSVGElement>) {
           const major = index % 6 === 0;
           const inner = major ? 238 : 249;
           const outer = major ? 285 : index % 2 === 0 ? 273 : 266;
-          // Rounded: Node and the browser disagree on the last digits of
-          // these sines, which hydration reports as an attribute mismatch.
+          // Rounded: Node and the browser disagree on the last digits of these
+          // sines, and hydration reports the difference as a mismatch.
           const at = (radius: number, axis: (value: number) => number) =>
             Math.round((300 + axis(angle) * radius) * 1000) / 1000;
           return (

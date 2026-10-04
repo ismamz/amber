@@ -31,7 +31,7 @@ export const Logo = memo(function Logo({ className }: { className?: string }) {
       <AmberIcon className="logo-amber" />
       <span className="font-display text-base leading-none tracking-wide uppercase [-webkit-text-stroke:1px_currentColor]">
         Amber
-        <span className="text-steel">Genetics</span>
+        <span className="hidden text-steel">Genetics</span>
       </span>
     </div>
   );

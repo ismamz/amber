@@ -241,8 +241,10 @@ export function Archive({ children }: { children: ReactNode }) {
         ref={root}
         data-archive
         className={cn(
-          "relative isolate min-h-svh touch-pinch-zoom bg-pattern select-none",
-          pathname === "/" ? "overflow-hidden" : "overflow-x-clip",
+          "relative isolate min-h-svh bg-pattern select-none",
+          pathname === "/"
+            ? "touch-pinch-zoom overflow-hidden"
+            : "touch-pan-y touch-pinch-zoom overflow-x-clip",
           // the carousel only listens for drags on the home route
           pathname === "/" && "cursor-grab data-[dragging=true]:cursor-grabbing",
         )}

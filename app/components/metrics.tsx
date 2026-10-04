@@ -4,12 +4,9 @@ import { Fragment, useRef } from "react";
 
 import { cascade } from "@/lib/reveal";
 
-// Claiming the scope opts each row out of the fallback's autoAlpha reveal, so
-// the row (label, track, value) has to fade in/out itself, same as it would
-// have gotten for free — on top of the bar/count tween, not instead of it.
-// The row can't be a wrapper element for that: `display: contents` (needed
-// to keep label/track/value as direct grid items) drops opacity entirely, so
-// autoAlpha targets the three real elements together instead.
+// Claiming the scope opts the rows out of the fallback, so each row fades itself
+// on top of the bar and counter tweens. A wrapper with `display: contents` would
+// keep the grid but drop opacity, so autoAlpha targets the three cells instead.
 export function Metrics({ metrics }: { metrics: { label: string; value: number }[] }) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -34,7 +31,7 @@ export function Metrics({ metrics }: { metrics: { label: string; value: number }
         },
         start,
       );
-      tl.to(fill, { width: `${entering ? target : 0}%`, ...timing }, start);
+      tl.to(fill, { scaleX: entering ? target / 100 : 0, ...timing }, start);
 
       const counter = { value: entering ? 0 : target };
       tl.to(
@@ -55,14 +52,13 @@ export function Metrics({ metrics }: { metrics: { label: string; value: number }
     scope,
     enterAt: "entrance-start",
     prepare: () => {
-      // Scoped to this instance: both pages sit as DOM siblings during the
-      // swap, and an unscoped selector here would reset the outgoing page's
-      // bars too, desyncing its leave tween.
+      // Scoped: both pages are siblings during the swap. An unscoped selector
+      // would reset the outgoing page's bars mid-leave.
       gsap.set(gsap.utils.toArray<HTMLElement>("[data-metric-row]", scope.current!), {
         autoAlpha: 0,
       });
       gsap.set(gsap.utils.toArray<HTMLElement>("[data-metric-fill]", scope.current!), {
-        width: "0%",
+        scaleX: 0,
       });
       gsap.utils
         .toArray<HTMLElement>("[data-metric-value]", scope.current!)
@@ -82,8 +78,8 @@ export function Metrics({ metrics }: { metrics: { label: string; value: number }
           <span data-metric-row={index} className="h-3 bg-silver">
             <span
               data-metric-fill=""
-              className="block h-full bg-black"
-              style={{ width: `${value}%` }}
+              className="block h-full w-full origin-left bg-black"
+              style={{ transform: `scaleX(${value / 100})` }}
             />
           </span>
           <span

@@ -24,7 +24,7 @@ export default function Detail({ params }: Route.ComponentProps) {
 
   return (
     <main className="relative lg:h-svh">
-      <div className="relative h-svh lg:absolute lg:inset-0">
+      <div className="relative h-[max(42rem,100svh)] lg:absolute lg:inset-0 lg:h-svh">
         <SpecimenDetail specimen={specimen} />
       </div>
       <SpecimenSequencer specimen={specimen} />

@@ -4,6 +4,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter()],
+  optimizeDeps: {
+    include: ["gsap/GSDevTools"],
+  },
   resolve: {
     tsconfigPaths: true,
   },

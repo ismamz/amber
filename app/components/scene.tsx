@@ -123,22 +123,23 @@ let dismiss: () => Promise<void> = () => Promise.resolve();
 // the last file lands, before the readout can reach 100. This one tweens to the
 // loading manager's count and waits for the platform to dismiss it.
 function Loader({ stage }: { stage: RefObject<HTMLCanvasElement | null> }) {
-  const { progress } = useProgress();
+  const progress = useProgress((state) => state.progress);
   const { motion } = useArchive();
+  const reduced = motion.current.reduced;
   const root = useRef<HTMLDivElement>(null);
   const count = useRef<HTMLSpanElement>(null);
   const shown = useRef({ value: 0 });
   const tween = useRef<gsap.core.Tween>(null);
+  const finishing = useRef<Promise<void> | null>(null);
   // Remount after readiness (HMR, StrictMode): nothing will dismiss it again.
   const [done, setDone] = useState(() => sceneReady.settled);
 
-  useEffect(() => {
-    if (done) return;
-    const show = (value: number, duration: number) => {
+  const show = useCallback(
+    (value: number, duration: number) => {
       tween.current?.kill();
       tween.current = gsap.to(shown.current, {
         value,
-        duration: motion.current.reduced ? 0 : duration,
+        duration: reduced ? 0 : duration,
         ease: "power2.out",
         onUpdate: () => {
           if (!count.current) return;
@@ -146,14 +147,26 @@ function Loader({ stage }: { stage: RefObject<HTMLCanvasElement | null> }) {
         },
       });
       return tween.current;
-    };
-    show(progress, 0.8);
-    dismiss = () =>
-      new Promise((resolve) => {
+    },
+    [reduced],
+  );
+
+  useEffect(() => {
+    if (done || finishing.current) return;
+    // The loading manager reports each batch separately; the readout never
+    // goes backwards, and only shader readiness may take it to 100.
+    show(Math.max(shown.current.value, Math.min(progress, 99)), 0.8);
+  }, [done, progress, show]);
+
+  useEffect(() => {
+    if (done) return;
+    dismiss = () => {
+      if (finishing.current) return finishing.current;
+      finishing.current = new Promise((resolve) => {
         show(100, 0.25).then(() => {
           // Crossfade with the canvas: a direct detail load already has its
           // specimen in place, so the stage stays hidden until the readout goes.
-          const duration = motion.current.reduced ? 0 : 0.35;
+          const duration = reduced ? 0 : 0.35;
           gsap.to(stage.current, { opacity: 1, duration });
           gsap.to(root.current, {
             autoAlpha: 0,
@@ -165,11 +178,14 @@ function Loader({ stage }: { stage: RefObject<HTMLCanvasElement | null> }) {
           });
         });
       });
+      return finishing.current;
+    };
     return () => {
       tween.current?.kill();
+      finishing.current = null;
       dismiss = () => Promise.resolve();
     };
-  }, [done, motion, progress, stage]);
+  }, [done, reduced, show, stage]);
 
   if (done) return null;
   return (
@@ -1280,7 +1296,7 @@ export function Scene() {
       className={
         pathname === "/"
           ? "fixed inset-0 z-20"
-          : "absolute inset-x-0 top-0 z-20 h-svh lg:fixed lg:inset-0 lg:h-auto"
+          : "absolute inset-x-0 top-0 z-20 h-[max(42rem,100svh)] lg:fixed lg:inset-0 lg:h-auto"
       }
       aria-label="Five dinosaur specimens on a rotating laboratory platform"
       role="img"

@@ -12,8 +12,8 @@ importers:
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.8)
       '@ismamz/hyperkinetic':
-        specifier: github:ismamz/hyperkinetic#94127f5f7102895d969c7c1d56c8abe1541d8893
-        version: git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+        specifier: github:ismamz/hyperkinetic#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0
+        version: hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
       '@react-router/fs-routes':
         specifier: 8.4.0
         version: 8.4.0(@react-router/dev@8.4.0(@react-router/serve@8.4.0(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3))(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(typescript@5.9.3)(vite@8.0.13(@types/node@22.19.19)(esbuild@0.27.7)(jiti@2.7.0)(yaml@2.9.1)))(typescript@5.9.3)
@@ -343,14 +343,6 @@ packages:
     peerDependencies:
       gsap: ^3.12.5
       react: '>=17'
-
-  '@ismamz/hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893':
-    resolution: {commit: 94127f5f7102895d969c7c1d56c8abe1541d8893, repo: https://github.com/ismamz/hyperkinetic.git, type: git}
-    version: 0.1.0-alpha.0
-    peerDependencies:
-      gsap: ^3.15.0
-      react: ~19.2.8
-      react-router: 8.4.0
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1280,6 +1272,14 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
+  hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0:
+    resolution: {commit: 2f7f3af6833daa2862a0e3a9c6b24acc5851bba0, repo: https://github.com/ismamz/hyperkinetic.git, type: git}
+    version: 0.1.0-alpha.0
+    peerDependencies:
+      gsap: ^3.15.0
+      react: ~19.2.8
+      react-router: 8.4.0
+
   iconv-lite@0.7.3:
     resolution: {integrity: sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==}
     engines: {node: '>=0.10.0'}
@@ -2145,12 +2145,6 @@ snapshots:
       gsap: 3.15.0
       react: 19.2.8
 
-  '@ismamz/hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#94127f5f7102895d969c7c1d56c8abe1541d8893(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)':
-    dependencies:
-      gsap: 3.15.0
-      react: 19.2.8
-      react-router: 8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -2931,6 +2925,12 @@ snapshots:
       setprototypeof: 1.2.0
       statuses: 2.0.2
       toidentifier: 1.0.1
+
+  hyperkinetic@git+https://github.com/ismamz/hyperkinetic.git#2f7f3af6833daa2862a0e3a9c6b24acc5851bba0(gsap@3.15.0)(react-router@8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8):
+    dependencies:
+      gsap: 3.15.0
+      react: 19.2.8
+      react-router: 8.4.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
 
   iconv-lite@0.7.3:
     dependencies:

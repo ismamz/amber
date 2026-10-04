@@ -1,8 +1,8 @@
-import { useGSAP } from "@gsap/react";
-import { useEnterReady } from "@ismamz/hyperkinetic";
+import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
 import { useRef } from "react";
 
+import { useTypewriter } from "@/lib/typewriter";
 import { cn } from "@/lib/utils";
 
 import { ChromatogramIcon } from "./icons/chromatogram";
@@ -13,44 +13,62 @@ const secondary = [45, 38, 50, 43, 47, 40, 51, 42, 46, 39];
 
 export function Output({ profile }: { profile: number }) {
   const active = [4, 2, 6, 7, 8][profile];
-  const ref = useRef<HTMLElement>(null);
-  const animated = useRef(false);
-  const ready = useEnterReady();
+  const scope = useRef<HTMLDivElement>(null);
+  const caption = useRef<HTMLParagraphElement>(null);
+  useTypewriter(caption);
 
-  useGSAP(
-    () => {
-      if (!ready || animated.current) return;
-      animated.current = true;
-      gsap
-        .matchMedia(ref.current!)
-        // GSAP only runs the callback while some condition matches, hence `motion`.
-        .add(
-          {
-            reduced: "(prefers-reduced-motion: reduce)",
-            motion: "(prefers-reduced-motion: no-preference)",
-          },
-          ({ conditions }) => {
-            const reduced = conditions!.reduced;
-            gsap.to("[data-chromatogram]", {
-              strokeDashoffset: 0,
-              duration: reduced ? 0 : 1.25,
-              stagger: reduced ? 0 : 0.025,
-              ease: "power2.inOut",
-            });
-          },
-        );
+  const animate = (
+    tl: gsap.core.Timeline,
+    { position, reduced }: PageAnimationData,
+    entering: boolean,
+  ) => {
+    tl.to(
+      scope.current,
+      {
+        autoAlpha: entering ? 1 : 0,
+        duration: reduced ? 0 : entering ? 0.15 : 0.35,
+        ease: entering ? "im-quart-inout" : "im-quint-inout",
+        ...(entering ? { clearProps: "opacity,visibility" } : {}),
+      },
+      position,
+    );
+    tl.to(
+      "[data-chromatogram]",
+      {
+        clipPath: entering ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)",
+        duration: reduced ? 0 : entering ? 0.68 : 0.35,
+        ease: entering ? "im-quart-inout" : "im-quint-inout",
+      },
+      position,
+    );
+  };
+
+  usePageTransition({
+    scope,
+    enterAt: "entrance-start",
+    prepare: () => {
+      gsap.set(scope.current, { autoAlpha: 0 });
+      gsap.set("[data-chromatogram]", { clipPath: "inset(0 100% 0 0)" });
     },
-    { scope: ref, dependencies: [ready] },
-  );
+    leave: (tl, data) => animate(tl, data, false),
+    enter: (tl, data) => {
+      // The archive title crosses the graph: wait until its exit finishes.
+      const position =
+        !data.initial && data.current.pathname === "/" ? tl.labels["title-start"] : data.position;
+      animate(tl, { ...data, position }, true);
+    },
+  });
 
   return (
-    <section ref={ref}>
+    <section>
       <div className="mb-2 flex items-end justify-between text-[10px]">
         <h3 className="font-display">Sequencing output</h3>
-        <p className="font-mono">Base pairs 311 — 331</p>
+        <p ref={caption} className="font-mono">
+          Base pairs 311 — 331
+        </p>
       </div>
       <div className="relative">
-        <div className="relative h-18 overflow-hidden border">
+        <div ref={scope} className="relative h-18 overflow-hidden border">
           <span
             aria-hidden="true"
             className="absolute inset-y-0 bg-steel/25"
@@ -60,6 +78,7 @@ export function Output({ profile }: { profile: number }) {
             }}
           />
           <ChromatogramIcon
+            data-chromatogram=""
             primary={primary}
             secondary={secondary}
             className="absolute inset-0 size-full"

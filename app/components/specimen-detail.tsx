@@ -7,14 +7,15 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router";
 
 import { specimens } from "@/lib/specimens";
-import { config } from "@/lib/transition";
+import { useStill } from "@/lib/still";
+import { useTypewriter } from "@/lib/typewriter";
 import { cn } from "@/lib/utils";
 
 import { Arrow } from "./icons/arrow";
 import { BarcodeIcon } from "./icons/barcode";
-import { Mask } from "./mask";
 import { Pager } from "./pager";
 import { Reticle } from "./reticle";
+import { Title } from "./title";
 import { Underlay } from "./underlay";
 
 type Specimen = (typeof specimens)[number];
@@ -103,14 +104,20 @@ function Identity({ specimen }: { specimen: Specimen }) {
 
 function Barcode({ specimen }: { specimen: Specimen }) {
   const scope = useRef<HTMLElement>(null);
+  const caption = useRef<HTMLParagraphElement>(null);
+  const code = useRef<HTMLDivElement>(null);
+
+  useTypewriter(caption);
 
   usePageTransition({
     scope,
     enterAt: "identity-start",
-    prepare: () => gsap.set(scope.current, { clipPath: "inset(0 0 100% 0)" }),
+    prepare: () => {
+      gsap.set(code.current, { clipPath: "inset(0 0 100% 0)" });
+    },
     leave: (tl, { position, reduced }) => {
       tl.to(
-        scope.current,
+        code.current,
         {
           clipPath: "inset(0 0 100% 0)",
           duration: reduced ? 0 : 0.35,
@@ -121,7 +128,7 @@ function Barcode({ specimen }: { specimen: Specimen }) {
     },
     enter: (tl, { position, reduced }) => {
       tl.fromTo(
-        scope.current,
+        code.current,
         { clipPath: "inset(0 0 100% 0)" },
         {
           clipPath: "inset(0 0 0% 0)",
@@ -146,12 +153,15 @@ function Barcode({ specimen }: { specimen: Specimen }) {
       aria-label={`Organic code ${specimen.code}`}
       className="absolute right-5 bottom-[24%] flex items-start gap-3 lg:top-26 lg:right-[2.5%] lg:bottom-auto lg:gap-5"
     >
-      <p className="hidden text-right text-[9px] leading-tight text-muted [text-box:trim-start_cap_alphabetic] sm:block">
+      <p
+        ref={caption}
+        className="hidden text-right text-[9px] leading-tight text-muted [text-box:trim-start_cap_alphabetic] sm:block"
+      >
         Spliced extraction
         <br />
         Organic code
       </p>
-      <div>
+      <div ref={code}>
         <div className="mb-2 h-px w-8 bg-black lg:w-12" />
         <BarcodeIcon bars={bars} className="h-32 w-8 overflow-visible lg:h-52 lg:w-12" />
       </div>
@@ -310,20 +320,20 @@ function Classification({ specimen }: { specimen: Specimen }) {
           </span>
         </span>
       </p>
-      <Mask
+      <Title
         index={0}
         total={2}
         className="mx-auto mt-2 text-[clamp(1rem,5vw,4rem)] lg:mr-0 lg:ml-auto lg:text-[clamp(1rem,3vw,4rem)]"
       >
         {specimen.species}
-      </Mask>
-      <Mask
+      </Title>
+      <Title
         index={1}
         total={2}
         className="mx-auto mt-1 text-[clamp(1rem,5vw,3.25rem)] lg:mr-0 lg:ml-auto lg:text-[clamp(1rem,2.5vw,3.25rem)]"
       >
         {`${specimen.line} / ${specimen.variant}`}
-      </Mask>
+      </Title>
     </section>
   );
 }
@@ -331,25 +341,7 @@ function Classification({ specimen }: { specimen: Specimen }) {
 export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
   const back = useRef<HTMLAnchorElement>(null);
 
-  usePageTransition({
-    scope: back,
-    enterAt: config.fallback.enterAt,
-    prepare: (data) => {
-      gsap.set(back.current, { autoAlpha: data.initial || data.current.pathname === "/" ? 0 : 1 });
-    },
-    leave: (tl, data) => {
-      if (data.next.pathname === "/") {
-        config.fallback.leave(tl, { ...data, targets: [back.current!] });
-      } else {
-        tl.set(back.current, { autoAlpha: 0 }, data.position);
-      }
-    },
-    enter: (tl, data) => {
-      if (data.initial || data.current.pathname === "/") {
-        config.fallback.enter(tl, { ...data, targets: [back.current!] });
-      }
-    },
-  });
+  useStill(back);
 
   return (
     <>
@@ -362,7 +354,7 @@ export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
         <Link
           ref={back}
           to="/"
-          className="pointer-events-auto absolute top-20 left-5 inline-flex h-7 items-center gap-2 font-display text-[11px] leading-none transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 motion-reduce:transition-none lg:top-8 lg:left-[45%] lg:h-9"
+          className="pointer-events-auto absolute top-20 left-5 inline-flex h-7 items-center gap-2 font-display text-[11px] leading-none hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 lg:top-8 lg:left-[45%] lg:h-9"
         >
           <span
             aria-hidden="true"

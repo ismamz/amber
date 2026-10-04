@@ -28,15 +28,13 @@ type ArchiveState = {
   }>;
 };
 
-// Snap the carousel to the nearest specimen when the gesture ends.
+// Snap to the nearest specimen when the gesture ends.
 export const snap = true;
 
-// A drag turns `drag` radians across the viewport width, which keeps the front
-// specimen roughly under the pointer. The wheel turns `wheel` per pixel and
-// never coasts: trackpads already send their own inertia. Releasing a drag
-// throws the target `throw` seconds along the measured velocity (capped at
-// `max`, at most one slot), then the snap glides to a slot at `glide` while
-// input tracks at `track`.
+// `drag`: radians per viewport width. Keeps the front specimen under the pointer.
+// `wheel`: radians per pixel. No coasting, trackpads bring their own inertia.
+// `throw`: seconds of velocity added on release, capped at `max` (one slot).
+// `glide` damps the snap, `track` damps the input.
 export const spin = {
   drag: 2,
   wheel: 0.0022,
@@ -48,22 +46,19 @@ export const spin = {
   track: 12,
 };
 
-// The slot the carousel comes to rest on. Rounding leans `bias` of a slot toward
-// the last direction of travel, so a short push still advances instead of
-// springing back; on a slot it is a no-op, so the frame loop can call it freely.
+// Slot to rest on. `bias` leans the rounding toward the direction of travel,
+// so a short push advances instead of springing back. No-op on a slot.
 export function landing(target: number, velocity: number) {
   const bias = Math.abs(velocity) > spin.min ? Math.sign(velocity) * spin.bias : 0;
   return Math.round(target / step + bias) * step;
 }
 
-// Hovering off-centre tips the platform that way, as if it were leaning to bring
-// the specimen under the cursor to the front. Purely visual: it rides on top of
-// the rendered angle so the snap target and the active specimen never move with
-// the cursor.
+// Hovering off-centre tips the platform toward the cursor. Visual only: it sits
+// on top of the rendered angle, the snap target and the active specimen stay put.
 export const lean = true;
 
-// `depth` boosts the tilt over the upper half of the stage — the far side of the
-// ring, where the same screen distance covers more of the turn.
+// `depth` boosts the tilt over the upper half of the stage. That is the far side
+// of the ring, where the same screen distance covers more of the turn.
 export const leanTilt = { max: 0.11, depth: 0.55, damp: 4 };
 
 export const ArchiveContext = createContext<ArchiveState | null>(null);

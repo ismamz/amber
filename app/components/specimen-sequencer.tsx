@@ -3,8 +3,10 @@ import gsap from "gsap";
 import { useRef } from "react";
 
 import type { specimens } from "@/lib/specimens";
+import { useTypewriter } from "@/lib/typewriter";
 
 import { Arrow } from "./icons/arrow";
+import { Line } from "./line";
 import { Magic } from "./magic";
 import { Metrics } from "./metrics";
 import { Output } from "./output";
@@ -18,6 +20,9 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
   const compatibility = [74, 88, 81, 77, 83][profile];
   const magic = useRef<HTMLDialogElement>(null);
   const scope = useRef<HTMLButtonElement>(null);
+  const caption = useRef<HTMLParagraphElement>(null);
+
+  useTypewriter(caption);
 
   usePageTransition({
     scope,
@@ -50,16 +55,14 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
   });
 
   return (
-    <aside className="relative z-30 flex min-h-[52rem] w-full flex-col px-5 py-6 sm:min-h-svh sm:px-10 sm:py-8 lg:absolute lg:inset-y-0 lg:left-0 lg:min-h-0 lg:w-[41.5%] lg:px-[2.5%] lg:pt-8 lg:pb-[3%]">
+    <aside className="relative z-30 flex min-h-[max(52rem,100svh)] w-full flex-col px-5 py-6 sm:px-10 sm:py-8 lg:absolute lg:inset-y-0 lg:left-0 lg:min-h-0 lg:w-[41.5%] lg:px-[2.5%] lg:pt-8 lg:pb-[3%]">
       <section className="relative flex min-h-0 flex-1 flex-col lg:mt-18">
-        <div className="relative flex items-baseline justify-between pt-4 pb-4">
-          <span
-            data-transition-line=""
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 border-b"
-          />
+        <div className="relative flex flex-col items-start justify-between gap-2 pt-4 pb-4 sm:flex-row sm:items-baseline sm:gap-0">
+          <Line index={0} total={5} className="absolute inset-x-0 bottom-0 border-b" />
           <h2 className="font-display text-[clamp(0.9rem,1.2vw,1.15rem)]">Genome sequencer</h2>
-          <p className="text-[9px] tracking-[0.18em] text-muted">Lab 04 / Genetics division</p>
+          <p ref={caption} className="text-[9px] tracking-[0.18em] text-muted">
+            Lab 04 / Genetics division
+          </p>
         </div>
         <Sequence model={profile} />
       </section>

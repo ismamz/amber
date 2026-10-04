@@ -3,7 +3,8 @@ import { useLayoutEffect, useRef, useState } from "react";
 
 import { specimens } from "@/lib/specimens";
 
-// Carousel position marker plus one jump button per specimen; tripled marker wraps seamlessly.
+// Carousel marker plus one jump button per specimen.
+// Three copies of the marker, one per cycle, so the wrap never jumps.
 
 export function Indicator({ active, goTo }: { active: number; goTo: (index: number) => void }) {
   const markers = useRef<Array<HTMLSpanElement | null>>([]);

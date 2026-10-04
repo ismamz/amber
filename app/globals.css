@@ -161,7 +161,8 @@
  * Incoming page: fixed to the viewport whatever the scroll; outgoing keeps its flow offset.
  * One stacking context at the UI layer (30): content below the canvas goes through <Underlay>.
  */
-[data-page-incoming] {
+[data-page-incoming],
+[data-page-outgoing] + [data-page] {
   position: fixed;
   inset: 0 0 auto;
   z-index: 30;
