@@ -1,5 +1,6 @@
+import { usePageTransition } from "@ismamz/hyperkinetic";
+import gsap from "gsap";
 import { useRef } from "react";
-import { Link } from "react-router";
 
 import type { specimens } from "@/lib/specimens";
 
@@ -16,31 +17,41 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
   const integrity = [97, 91, 94, 89, 96][profile];
   const compatibility = [74, 88, 81, 77, 83][profile];
   const magic = useRef<HTMLDialogElement>(null);
+  const scope = useRef<HTMLButtonElement>(null);
+
+  usePageTransition({
+    scope,
+    enterAt: "entrance-start",
+    prepare: () => gsap.set(scope.current, { clipPath: "inset(0 100% 0 0)" }),
+    leave: (tl, { position, reduced }) => {
+      tl.to(
+        scope.current,
+        {
+          clipPath: "inset(0 100% 0 0)",
+          duration: reduced ? 0 : 0.35,
+          ease: "im-quint-inout",
+        },
+        position,
+      );
+    },
+    enter: (tl, { position, reduced }) => {
+      tl.fromTo(
+        scope.current,
+        { clipPath: "inset(0 100% 0 0)" },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: reduced ? 0 : 0.65,
+          ease: "im-quart-inout",
+          clearProps: "clipPath",
+        },
+        position,
+      );
+    },
+  });
 
   return (
     <aside className="relative z-30 flex min-h-[52rem] w-full flex-col px-5 py-6 sm:min-h-svh sm:px-10 sm:py-8 lg:absolute lg:inset-y-0 lg:left-0 lg:min-h-0 lg:w-[41.5%] lg:px-[2.5%] lg:pt-8 lg:pb-[3%]">
       <section className="relative flex min-h-0 flex-1 flex-col lg:mt-18">
-        <div className="flex h-7 shrink-0 items-start">
-          <Link
-            to="/"
-            className="pointer-events-auto inline-flex items-center gap-2 font-display text-[11px] leading-none transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 motion-reduce:transition-none"
-          >
-            <span
-              aria-hidden="true"
-              className="grid size-[1.4em] shrink-0 place-items-center rounded-full bg-black text-white"
-            >
-              <Arrow className="h-[0.58em] w-[0.51em] -translate-x-[0.08em] rotate-180" />
-            </span>
-            <span className="tracking-[0.32em] [text-box:trim-both_cap_alphabetic]">
-              All specimens
-            </span>
-          </Link>
-        </div>
-        <span
-          data-transition-line=""
-          aria-hidden="true"
-          className="absolute inset-x-0 top-7 border-t-2"
-        />
         <div className="relative flex items-baseline justify-between pt-4 pb-4">
           <span
             data-transition-line=""
@@ -54,7 +65,7 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
       </section>
 
       <div className="mt-7 space-y-5">
-        <Output />
+        <Output profile={profile} />
         <Metrics
           metrics={[
             { label: "Genome integrity", value: integrity },
@@ -62,6 +73,7 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
           ]}
         />
         <button
+          ref={scope}
           type="button"
           onClick={() => magic.current?.showModal()}
           className="group pointer-events-auto relative flex h-14 w-full cursor-pointer items-center justify-between overflow-hidden border bg-black px-5 font-display text-base text-white transition-colors duration-500 focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none"

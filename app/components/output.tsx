@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 import { ChromatogramIcon } from "./icons/chromatogram";
 
 const bases = ["A", "C", "G", "T", "A", "A", "T", "C", "G", "A", "T"];
-const active = 5;
 const primary = [22, 14, 31, 17, 28, 24, 19, 11, 23, 16, 10];
 const secondary = [45, 38, 50, 43, 47, 40, 51, 42, 46, 39];
 
-export function Output() {
+export function Output({ profile }: { profile: number }) {
+  const active = [4, 2, 6, 7, 8][profile];
   const ref = useRef<HTMLElement>(null);
   const animated = useRef(false);
   const ready = useEnterReady();

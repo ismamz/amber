@@ -4,10 +4,13 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(SplitText);
 import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
 import { useLayoutEffect, useRef } from "react";
+import { Link } from "react-router";
 
 import { specimens } from "@/lib/specimens";
+import { config } from "@/lib/transition";
 import { cn } from "@/lib/utils";
 
+import { Arrow } from "./icons/arrow";
 import { BarcodeIcon } from "./icons/barcode";
 import { Mask } from "./mask";
 import { Pager } from "./pager";
@@ -99,6 +102,38 @@ function Identity({ specimen }: { specimen: Specimen }) {
 }
 
 function Barcode({ specimen }: { specimen: Specimen }) {
+  const scope = useRef<HTMLElement>(null);
+
+  usePageTransition({
+    scope,
+    enterAt: "identity-start",
+    prepare: () => gsap.set(scope.current, { clipPath: "inset(0 0 100% 0)" }),
+    leave: (tl, { position, reduced }) => {
+      tl.to(
+        scope.current,
+        {
+          clipPath: "inset(0 0 100% 0)",
+          duration: reduced ? 0 : 0.35,
+          ease: "im-quint-inout",
+        },
+        position,
+      );
+    },
+    enter: (tl, { position, reduced }) => {
+      tl.fromTo(
+        scope.current,
+        { clipPath: "inset(0 0 100% 0)" },
+        {
+          clipPath: "inset(0 0 0% 0)",
+          duration: reduced ? 0 : 0.65,
+          ease: "im-quart-inout",
+          clearProps: "clipPath",
+        },
+        position,
+      );
+    },
+  });
+
   // from the code, not random: server and client match
   const bars = Array.from(
     { length: 32 },
@@ -107,6 +142,7 @@ function Barcode({ specimen }: { specimen: Specimen }) {
 
   return (
     <aside
+      ref={scope}
       aria-label={`Organic code ${specimen.code}`}
       className="absolute right-5 bottom-[24%] flex items-start gap-3 lg:top-26 lg:right-[2.5%] lg:bottom-auto lg:gap-5"
     >
@@ -228,20 +264,63 @@ function Bases({ specimen }: { specimen: Specimen }) {
 }
 
 function Classification({ specimen }: { specimen: Specimen }) {
+  const scope = useRef<HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    if (!scope.current) return;
+    const split = SplitText.create(scope.current.querySelector("[data-classification]")!, {
+      type: "chars",
+      charsClass: "classification-char",
+    });
+    return () => split.revert();
+  }, []);
+
+  const animate = (
+    tl: gsap.core.Timeline,
+    { position, reduced }: PageAnimationData,
+    entering: boolean,
+  ) => {
+    tl.to(
+      ".classification-char",
+      {
+        yPercent: entering ? 0 : -160,
+        duration: reduced ? 0 : entering ? 0.55 : 0.3,
+        stagger: { amount: reduced ? 0 : entering ? 0.16 : 0.1 },
+        ease: entering ? "im-quart-inout" : "im-quint-inout",
+      },
+      position,
+    );
+  };
+
+  usePageTransition({
+    scope,
+    group: "titles",
+    enterAt: "title-start",
+    prepare: () => gsap.set(".classification-char", { yPercent: 140 }),
+    leave: (tl, data) => animate(tl, data, false),
+    enter: (tl, data) => animate(tl, data, true),
+  });
+
   return (
-    <section className="absolute inset-x-5 bottom-7 text-center lg:right-[2.5%] lg:bottom-[7%] lg:left-auto lg:text-right">
-      <p className="font-display text-[clamp(0.9rem,1.5vw,1.45rem)]">Exotic DNA</p>
+    <section className="absolute inset-x-5 bottom-7 text-center lg:right-[2.5%] lg:bottom-[7%] lg:left-[52%] lg:text-right">
+      <p ref={scope} className="font-display text-[clamp(0.9rem,1.5vw,1.45rem)]">
+        <span className="mx-[-0.04em] my-[-0.15em] block overflow-hidden px-[0.04em] py-[0.15em]">
+          <span data-classification="" className="block [&_.classification-char]:align-top">
+            Exotic DNA
+          </span>
+        </span>
+      </p>
       <Mask
         index={0}
         total={2}
-        className="mx-auto mt-2 text-[clamp(1.35rem,4vw,4rem)] lg:mr-0 lg:ml-auto"
+        className="mx-auto mt-2 text-[clamp(1rem,5vw,4rem)] lg:mr-0 lg:ml-auto lg:text-[clamp(1rem,3vw,4rem)]"
       >
         {specimen.species}
       </Mask>
       <Mask
         index={1}
         total={2}
-        className="mx-auto mt-1 text-[clamp(1.35rem,3.2vw,3.25rem)] lg:mr-0 lg:ml-auto"
+        className="mx-auto mt-1 text-[clamp(1rem,5vw,3.25rem)] lg:mr-0 lg:ml-auto lg:text-[clamp(1rem,2.5vw,3.25rem)]"
       >
         {`${specimen.line} / ${specimen.variant}`}
       </Mask>
@@ -250,6 +329,28 @@ function Classification({ specimen }: { specimen: Specimen }) {
 }
 
 export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
+  const back = useRef<HTMLAnchorElement>(null);
+
+  usePageTransition({
+    scope: back,
+    enterAt: config.fallback.enterAt,
+    prepare: (data) => {
+      gsap.set(back.current, { autoAlpha: data.initial || data.current.pathname === "/" ? 0 : 1 });
+    },
+    leave: (tl, data) => {
+      if (data.next.pathname === "/") {
+        config.fallback.leave(tl, { ...data, targets: [back.current!] });
+      } else {
+        tl.set(back.current, { autoAlpha: 0 }, data.position);
+      }
+    },
+    enter: (tl, data) => {
+      if (data.initial || data.current.pathname === "/") {
+        config.fallback.enter(tl, { ...data, targets: [back.current!] });
+      }
+    },
+  });
+
   return (
     <>
       {/* portal wraps the whole component: hooks mount with its DOM */}
@@ -258,6 +359,21 @@ export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
       </Underlay>
 
       <div className="absolute inset-0 z-30">
+        <Link
+          ref={back}
+          to="/"
+          className="pointer-events-auto absolute top-20 left-5 inline-flex h-7 items-center gap-2 font-display text-[11px] leading-none transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 motion-reduce:transition-none lg:top-8 lg:left-[45%] lg:h-9"
+        >
+          <span
+            aria-hidden="true"
+            className="grid size-[2.1em] shrink-0 place-items-center rounded-full bg-black text-white"
+          >
+            <Arrow className="h-[0.87em] w-[0.765em] -translate-x-[0.12em] rotate-180" />
+          </span>
+          <span className="tracking-[0.32em] [text-box:trim-both_cap_alphabetic]">
+            All specimens
+          </span>
+        </Link>
         <Identity specimen={specimen} />
         <Barcode specimen={specimen} />
         <Bases specimen={specimen} />
