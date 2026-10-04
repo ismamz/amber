@@ -7,6 +7,7 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router";
 
 import { specimens } from "@/lib/specimens";
+import { config } from "@/lib/transition";
 import { cn } from "@/lib/utils";
 
 import { Arrow } from "./icons/arrow";
@@ -263,9 +264,52 @@ function Bases({ specimen }: { specimen: Specimen }) {
 }
 
 function Classification({ specimen }: { specimen: Specimen }) {
+  const scope = useRef<HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    if (!scope.current) return;
+    const split = SplitText.create(scope.current.querySelector("[data-classification]")!, {
+      type: "chars",
+      charsClass: "classification-char",
+    });
+    return () => split.revert();
+  }, []);
+
+  const animate = (
+    tl: gsap.core.Timeline,
+    { position, reduced }: PageAnimationData,
+    entering: boolean,
+  ) => {
+    tl.to(
+      ".classification-char",
+      {
+        yPercent: entering ? 0 : -160,
+        duration: reduced ? 0 : entering ? 0.55 : 0.3,
+        stagger: { amount: reduced ? 0 : entering ? 0.16 : 0.1 },
+        ease: entering ? "im-quart-inout" : "im-quint-inout",
+      },
+      position,
+    );
+  };
+
+  usePageTransition({
+    scope,
+    group: "titles",
+    enterAt: "title-start",
+    prepare: () => gsap.set(".classification-char", { yPercent: 140 }),
+    leave: (tl, data) => animate(tl, data, false),
+    enter: (tl, data) => animate(tl, data, true),
+  });
+
   return (
     <section className="absolute inset-x-5 bottom-7 text-center lg:right-[2.5%] lg:bottom-[7%] lg:left-[52%] lg:text-right">
-      <p className="font-display text-[clamp(0.9rem,1.5vw,1.45rem)]">Exotic DNA</p>
+      <p ref={scope} className="font-display text-[clamp(0.9rem,1.5vw,1.45rem)]">
+        <span className="mx-[-0.04em] my-[-0.15em] block overflow-hidden px-[0.04em] py-[0.15em]">
+          <span data-classification="" className="block [&_.classification-char]:align-top">
+            Exotic DNA
+          </span>
+        </span>
+      </p>
       <Mask
         index={0}
         total={2}
@@ -285,6 +329,28 @@ function Classification({ specimen }: { specimen: Specimen }) {
 }
 
 export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
+  const back = useRef<HTMLAnchorElement>(null);
+
+  usePageTransition({
+    scope: back,
+    enterAt: config.fallback.enterAt,
+    prepare: (data) => {
+      gsap.set(back.current, { autoAlpha: data.initial || data.current.pathname === "/" ? 0 : 1 });
+    },
+    leave: (tl, data) => {
+      if (data.next.pathname === "/") {
+        config.fallback.leave(tl, { ...data, targets: [back.current!] });
+      } else {
+        tl.set(back.current, { autoAlpha: 0 }, data.position);
+      }
+    },
+    enter: (tl, data) => {
+      if (data.initial || data.current.pathname === "/") {
+        config.fallback.enter(tl, { ...data, targets: [back.current!] });
+      }
+    },
+  });
+
   return (
     <>
       {/* portal wraps the whole component: hooks mount with its DOM */}
@@ -294,6 +360,7 @@ export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
 
       <div className="absolute inset-0 z-30">
         <Link
+          ref={back}
           to="/"
           className="pointer-events-auto absolute top-20 left-5 inline-flex h-7 items-center gap-2 font-display text-[11px] leading-none transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 motion-reduce:transition-none lg:top-8 lg:left-[45%] lg:h-9"
         >
