@@ -2,7 +2,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
-import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
+import { usePageTransition, type PageAnimationData } from "hyperkinetic";
 import { useLayoutEffect, useRef } from "react";
 
 import { animateMask } from "@/lib/reveal";

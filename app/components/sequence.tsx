@@ -1,5 +1,5 @@
-import { usePageTransition, type PageAnimationData } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
+import { usePageTransition, type PageAnimationData } from "hyperkinetic";
 import { useRef } from "react";
 
 import { cascade } from "@/lib/reveal";

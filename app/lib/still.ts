@@ -1,5 +1,5 @@
-import { usePageTransition } from "@ismamz/hyperkinetic";
 import gsap from "gsap";
+import { usePageTransition } from "hyperkinetic";
 import type { RefObject } from "react";
 
 import { config } from "@/lib/transition";

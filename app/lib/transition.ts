@@ -1,5 +1,5 @@
-import type { AnimatedOutletProps } from "@ismamz/hyperkinetic";
 import { gsap } from "gsap";
+import type { AnimatedOutletProps } from "hyperkinetic";
 
 import { specimenIndex } from "@/lib/specimens";
 
