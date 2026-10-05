@@ -24,7 +24,7 @@ export const Header = memo(function Header({ showLogo = false }: { showLogo?: bo
         <Logo className="gap-1.5 sm:gap-2 [&>span]:text-[0.8rem] sm:[&>span]:text-base [&>svg]:h-7 sm:[&>svg]:h-9" />
       </Link>
       <a
-        href="https://github.com/ismamz/react-router-gsap-transitions"
+        href="https://github.com/ismamz/amber"
         target="_blank"
         rel="noreferrer"
         aria-label="Open GitHub in a new tab"

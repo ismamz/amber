@@ -1,4 +1,4 @@
-# react-router-gsap-transitions
+# Amber — hyperkinetic demo
 
 > Parallel page transitions for React Router v8 on a shared GSAP timeline.
 
@@ -7,6 +7,8 @@
 [Live demo ↗](https://amber.isma.uy/)
 
 _The demo is **Amber Genetics**, a fictional lab archive with a React Three Fiber scene._
+
+Page transitions use [Hyperkinetic](https://github.com/ismamz/hyperkinetic), a React Router library for parallel page transitions on a shared GSAP timeline.
 
 ## Stack
 
@@ -25,29 +27,6 @@ pnpm dev
 ```
 
 Other scripts: `pnpm build`, `pnpm start`, `pnpm typecheck`, `pnpm lint`, `pnpm format`.
-
-## How the demo is wired
-
-Every navigation builds one paused GSAP timeline. Both pages stay mounted as siblings while it plays: the outgoing one is `inert`, the incoming one is `fixed` above the canvas. The engine is [`hyperkinetic`](https://www.npmjs.com/package/hyperkinetic), installed from npm at the exact version in `package.json`; its README documents the API, the order of a run and its limits.
-
-Amber's integration is in a few files:
-
-- `app/root.tsx`: app shell, the persistent canvas and `<AnimatedOutlet>`; registers the scene as a transition resource.
-- `app/lib/transition.ts`: the global choreography (labels, shared effects) and the fallback that moves anything a component does not animate itself.
-- `app/lib/scene.ts`: the promise the lazy scene resolves once it is ready to be shown.
-- `app/components/scene.tsx`: the R3F scene, a persistent participant on the same timeline.
-- `app/routes/`: archive and specimen detail. Components declare their own recipes with `usePageTransition`.
-
-Details worth knowing:
-
-- GSAP owns animated values; React owns structure and discrete state.
-- Scroll is the document's. The site resets it in the transition hooks; `<ScrollRestoration />` stays out of the app on purpose.
-- Layer order: reticle 10, canvas 20, UI 30, logo 40. Page content below the canvas renders through `<Underlay>`.
-- Reduced motion is honoured on the timeline, the outgoing page is `inert` and links keep a visible focus ring.
-
-## Contributing
-
-Conventional Commits with a lowercase subject. Run `pnpm typecheck` before pushing; the pre-commit hook lints and formats staged files. Specimen data is fictional. Model and font credits live in [public/credits.txt](public/credits.txt).
 
 ---
 
