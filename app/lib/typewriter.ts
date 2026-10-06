@@ -5,7 +5,12 @@ import { useLayoutEffect, type RefObject } from "react";
 
 gsap.registerPlugin(SplitText);
 
-export function useTypewriter(scope: RefObject<HTMLElement | null>, text?: string, pace = 1) {
+export function useTypewriter(
+  scope: RefObject<HTMLElement | null>,
+  text?: string,
+  pace = 1,
+  offset = 0,
+) {
   useLayoutEffect(() => {
     if (!scope.current) return;
     const split = SplitText.create(scope.current, {
@@ -23,14 +28,14 @@ export function useTypewriter(scope: RefObject<HTMLElement | null>, text?: strin
       tl.to(
         ".typewriter-char",
         { autoAlpha: 0, duration: 0, stagger: { each: reduced ? 0 : 0.015 * pace, from: "end" } },
-        position,
+        position + (reduced ? 0 : offset),
       );
     },
     enter: (tl, { position, reduced }) => {
       tl.to(
         ".typewriter-char",
         { autoAlpha: 1, duration: 0, stagger: reduced ? 0 : 0.025 * pace },
-        position,
+        position + (reduced ? 0 : offset),
       );
     },
   });

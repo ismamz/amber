@@ -40,7 +40,7 @@ function Subtitle({ children }: { children: string }) {
         stagger: { amount: reduced ? 0 : entering ? 0.16 : 0.1 },
         ease: entering ? "im-quart-inout" : "im-quint-inout",
       },
-      position,
+      position + (entering || reduced ? 0 : 0.1),
     );
   };
 
@@ -80,7 +80,7 @@ export default function Home() {
   const { active, goTo } = useArchive();
   const specimen = specimens[active];
   const text = `Specimen ${pad(active + 1)} / ${pad(specimens.length)} — ${specimen.summary}`;
-  useTypewriter(summary, text, 0.7);
+  useTypewriter(summary, text, 0.7, 0.25);
 
   const animate = (
     tl: gsap.core.Timeline,

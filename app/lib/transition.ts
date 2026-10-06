@@ -78,9 +78,12 @@ export const config = {
     );
     const betweenDetails =
       specimenIndex(current.pathname) >= 0 && specimenIndex(next.pathname) >= 0;
-    const identityStart = betweenDetails
-      ? Math.max(entranceStart, leaveEnd("identity") - at(0.25))
-      : entranceStart + at(0.2);
+    const identityStart =
+      next.pathname === "/"
+        ? titleStart + at(0.45)
+        : betweenDetails
+          ? Math.max(entranceStart, leaveEnd("identity") - at(0.25))
+          : entranceStart + at(0.2);
     tl.addLabel("exit-end", exitEnd);
     tl.addLabel("scene-start", sceneStart);
     tl.addLabel("entrance-start", entranceStart);

@@ -28,7 +28,7 @@ export const Header = memo(function Header({ showLogo = false }: { showLogo?: bo
           href="https://tympanus.net/codrops/"
           target="_blank"
           rel="noreferrer"
-          className="pointer-events-auto max-w-32 text-right text-[10px] leading-tight tracking-wider underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4 sm:max-w-none sm:text-xs"
+          className="pointer-events-auto max-w-32 text-right text-[0.625rem] leading-tight tracking-wider underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4 sm:max-w-none sm:text-xs"
         >
           Read the tutorial in Codrops <span aria-hidden="true">↗</span>
         </a>

@@ -92,7 +92,7 @@ function Identity({ specimen }: { specimen: Specimen }) {
         <p className="mt-2 font-display text-[clamp(0.7rem,1vw,0.95rem)]">
           <span className="-mx-[0.04em] -my-[0.15em] block overflow-hidden px-[0.04em] py-[0.15em]">
             <span data-identity="" className="block [&_.identity-char]:align-top">
-              DNA extraction specimen
+              {specimen.summary}
             </span>
           </span>
         </p>

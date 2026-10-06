@@ -94,7 +94,13 @@ export function Sequence({ model }: { model: number }) {
               <tr
                 data-sequence-row=""
                 key={`${sequence}-${index}`}
-                className={cn("relative", index === 4 && "bg-black text-white")}
+                className={cn(
+                  "relative",
+                  index === 4 && "bg-black text-white",
+                  index >= 10 && "lg:[@media(max-height:46.875rem)]:hidden",
+                  index >= 8 && "lg:[@media(max-height:43.75rem)]:hidden",
+                  index >= 6 && "lg:[@media(max-height:40.625rem)]:hidden",
+                )}
               >
                 <td className="w-[18%] px-1 text-left">
                   {311 + index}
