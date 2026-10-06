@@ -83,12 +83,12 @@ export function Sequence({ model }: { model: number }) {
   return (
     <div className="grid min-h-0 flex-1 grid-cols-[1.25fr_1fr] gap-4 pt-5 sm:gap-7">
       <Genome model={model} />
-      <div ref={scope} className="flex min-w-0 flex-col">
+      <div ref={scope} className="flex min-h-0 min-w-0 flex-col">
         <p className="relative pb-2 font-display text-[9px]">
           <span data-sequence-title="">Nucleotide sequence</span>
           <Line index={4} total={5} className="absolute inset-x-0 bottom-0 border-b" />
         </p>
-        <table className="mt-2 h-full w-full table-fixed border-collapse text-[10px] xl:text-[11px]">
+        <table className="mt-2 min-h-0 w-full flex-1 table-fixed border-collapse text-[10px] xl:text-[11px]">
           <tbody>
             {sequences.map((sequence, index) => (
               <tr
@@ -101,7 +101,10 @@ export function Sequence({ model }: { model: number }) {
                   <span
                     data-sequence-line=""
                     aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 border-b border-steel/40"
+                    className={cn(
+                      "absolute inset-x-0 bottom-0 border-b",
+                      index === 4 ? "border-black" : "border-steel/40",
+                    )}
                   />
                 </td>
                 {sequence.split(" ").map((base, baseIndex) => (

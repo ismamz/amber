@@ -9,15 +9,15 @@ export function Footer() {
             Design inspiration
           </Link>
           <p>
-            Design & code by <Link href="https://isma.uy">isma</Link> with{" "}
-            <Link href="https://github.com/ismamz/hyperkinetic">Hyperkinetic</Link>
+            Design & code by <Link href="https://isma.uy">isma</Link>
           </p>
         </div>
       </div>
       <p className="text-right">
         <span className="block text-black">Scroll / drag / ← →</span>
         <span className="mt-1 hidden sm:block">
-          Vite + React Router + Tailwind CSS + React Three Fiber
+          Vite + React Router + Tailwind CSS + React Three Fiber + GSAP +{" "}
+          <Link href="https://github.com/ismamz/hyperkinetic">Hyperkinetic</Link>
         </span>
       </p>
     </footer>
@@ -27,7 +27,7 @@ export function Footer() {
 function Link({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a
-      className="pointer-events-auto underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4"
+      className="pointer-events-auto underline decoration-silver underline-offset-3 hover:text-black hover:decoration-black focus-visible:outline-2 focus-visible:outline-offset-4"
       href={href}
       target="_blank"
       rel="noreferrer"

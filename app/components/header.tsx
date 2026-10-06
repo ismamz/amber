@@ -23,15 +23,25 @@ export const Header = memo(function Header({ showLogo = false }: { showLogo?: bo
       >
         <Logo className="gap-1.5 sm:gap-2 [&>span]:text-[0.8rem] sm:[&>span]:text-base [&>svg]:h-7 sm:[&>svg]:h-9" />
       </Link>
-      <a
-        href="https://github.com/ismamz/amber"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Open GitHub in a new tab"
-        className="pointer-events-auto grid size-8 place-items-center transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none sm:size-9"
-      >
-        <GithubIcon className="size-6 fill-current sm:size-8" />
-      </a>
+      <div className={`flex items-center gap-4 sm:gap-6 ${sceneIsReady ? "visible" : "invisible"}`}>
+        <a
+          href="https://tympanus.net/codrops/"
+          target="_blank"
+          rel="noreferrer"
+          className="pointer-events-auto max-w-32 text-right text-[10px] leading-tight tracking-wider underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4 sm:max-w-none sm:text-xs"
+        >
+          Read the tutorial in Codrops <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          href="https://github.com/ismamz/amber"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Open GitHub in a new tab"
+          className="pointer-events-auto grid size-8 place-items-center transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:transition-none sm:size-9"
+        >
+          <GithubIcon className="size-6 fill-current sm:size-8" />
+        </a>
+      </div>
     </div>
   );
 });

@@ -57,7 +57,7 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
   return (
     <aside className="relative z-30 flex min-h-[max(52rem,100svh)] w-full flex-col px-5 py-6 sm:px-10 sm:py-8 lg:absolute lg:inset-y-0 lg:left-0 lg:min-h-0 lg:w-[41.5%] lg:px-[2.5%] lg:pt-8 lg:pb-[3%]">
       <section className="relative flex min-h-0 flex-1 flex-col lg:mt-18">
-        <div className="relative flex flex-col items-start justify-between gap-2 pt-4 pb-4 sm:flex-row sm:items-baseline sm:gap-0">
+        <div className="relative flex flex-col items-start justify-between gap-2 pt-4 pb-4 sm:flex-row sm:items-baseline sm:gap-0 lg:pt-0">
           <Line index={0} total={5} className="absolute inset-x-0 bottom-0 border-b" />
           <h2 className="font-display text-[clamp(0.9rem,1.2vw,1.15rem)]">Genome sequencer</h2>
           <p ref={caption} className="text-[9px] tracking-[0.18em] text-muted">
@@ -67,7 +67,7 @@ export function SpecimenSequencer({ specimen }: { specimen: Specimen }) {
         <Sequence model={profile} />
       </section>
 
-      <div className="mt-7 space-y-5">
+      <div className="mt-9 space-y-7">
         <Output profile={profile} />
         <Metrics
           metrics={[
