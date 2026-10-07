@@ -23,6 +23,8 @@
 
   --animate-error: error 0.5s ease-out;
   --animate-nav-blink: nav-blink 0.15s ease-out 2;
+  --animate-loader-dim: loader-dim 0.8s ease-in-out infinite;
+  --animate-logo-dim: logo-dim 0.8s ease-in-out infinite;
 
   /* single flash to the specimens' emissive color, not a held hover state */
   @keyframes nav-blink {
@@ -82,29 +84,6 @@
     50% {
       opacity: 0.45;
     }
-  }
-}
-
-.loader-amber {
-  animation: loader-dim 0.8s ease-in-out infinite;
-}
-
-.logo-link:hover .logo-amber {
-  animation: logo-dim 0.8s ease-in-out infinite;
-  filter: drop-shadow(0 0 7px rgb(231 163 25 / 35%));
-}
-
-.logo-amber {
-  transition: filter 300ms ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .logo-link:hover .logo-amber {
-    animation: none;
-    transition: none;
-  }
-  .loader-amber {
-    animation: none;
   }
 }
 

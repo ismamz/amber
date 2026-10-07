@@ -191,7 +191,7 @@ function Loader({ stage }: { stage: RefObject<HTMLCanvasElement | null> }) {
   return (
     <div ref={root} className="pointer-events-none absolute inset-0 grid place-content-center">
       <div className="flex flex-col items-center gap-6 font-display text-[10px] leading-none">
-        <div className="loader-amber" aria-hidden="true">
+        <div className="motion-safe:animate-loader-dim" aria-hidden="true">
           <AmberIcon className="h-10 sm:h-11" />
         </div>
         <div className="flex items-baseline gap-4">

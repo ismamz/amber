@@ -28,7 +28,7 @@ export function AmberIcon({ className }: { className?: string }) {
 export const Logo = memo(function Logo({ className }: { className?: string }) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <AmberIcon className="logo-amber" />
+      <AmberIcon className="transition-[filter] duration-300 ease-[ease] group-hover/logo:drop-shadow-[0_0_7px_rgb(231_163_25_/_35%)] motion-safe:group-hover/logo:animate-logo-dim motion-reduce:group-hover/logo:transition-none" />
       <span className="font-display text-base leading-none tracking-wide uppercase [-webkit-text-stroke:1px_currentColor]">
         Amber
         <span className="hidden text-steel">Genetics</span>
