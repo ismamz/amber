@@ -312,7 +312,7 @@ function Classification({ specimen }: { specimen: Specimen }) {
   });
 
   return (
-    <section className="absolute inset-x-5 bottom-7 text-center lg:right-[2.5%] lg:bottom-[7%] lg:left-[52%] lg:text-right">
+    <section className="absolute inset-x-5 bottom-[calc(5rem+env(safe-area-inset-bottom))] text-center sm:bottom-7 lg:right-[2.5%] lg:bottom-[7%] lg:left-[52%] lg:text-right">
       <p ref={scope} className="font-display text-[clamp(0.9rem,1.5vw,1.45rem)]">
         <span className="mx-[-0.04em] my-[-0.15em] block overflow-hidden px-[0.04em] py-[0.15em]">
           <span data-classification="" className="block [&_.classification-char]:align-top">
@@ -350,22 +350,20 @@ export function SpecimenDetail({ specimen }: { specimen: Specimen }) {
         <Reticle />
       </Underlay>
 
-      <div className="absolute inset-0 z-30">
-        <Link
-          ref={back}
-          to="/"
-          className="pointer-events-auto absolute top-20 left-5 inline-flex h-7 items-center gap-2 font-display text-[11px] leading-none hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 lg:top-8 lg:left-[45%] lg:h-9"
+      <Link
+        ref={back}
+        to="/"
+        className="pointer-events-auto fixed inset-x-5 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-40 inline-flex h-11 items-center justify-center gap-2 bg-background font-display text-[11px] leading-none hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 active:opacity-40 sm:absolute sm:inset-x-auto sm:top-20 sm:bottom-auto sm:left-5 sm:z-30 sm:h-7 sm:bg-transparent lg:top-8 lg:left-[45%] lg:h-9"
+      >
+        <span
+          aria-hidden="true"
+          className="grid size-[2.1em] shrink-0 place-items-center rounded-full bg-black text-white"
         >
-          <span
-            aria-hidden="true"
-            className="grid size-[2.1em] shrink-0 place-items-center rounded-full bg-black text-white"
-          >
-            <Arrow className="h-[0.87em] w-[0.765em] -translate-x-[0.12em] rotate-180" />
-          </span>
-          <span className="tracking-[0.32em] [text-box:trim-both_cap_alphabetic]">
-            All specimens
-          </span>
-        </Link>
+          <Arrow className="h-[0.87em] w-[0.765em] -translate-x-[0.12em] rotate-180" />
+        </span>
+        <span className="tracking-[0.32em] [text-box:trim-both_cap_alphabetic]">All specimens</span>
+      </Link>
+      <div className="absolute inset-0 z-30">
         <Identity specimen={specimen} />
         <Barcode specimen={specimen} />
         <Bases specimen={specimen} />

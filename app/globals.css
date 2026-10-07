@@ -116,6 +116,9 @@
 }
 
 @layer base {
+  html {
+    overscroll-behavior: none;
+  }
   body {
     @apply m-0 bg-background font-mono text-foreground uppercase antialiased;
   }

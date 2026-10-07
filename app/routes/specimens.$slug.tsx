@@ -23,7 +23,7 @@ export default function Detail({ params }: Route.ComponentProps) {
   if (!specimen) return <Notice title="Specimen not found" />;
 
   return (
-    <main className="relative lg:h-svh">
+    <main className="relative pb-[calc(3rem+env(safe-area-inset-bottom))] sm:pb-0 lg:h-svh">
       <div className="relative h-[max(42rem,100svh)] lg:absolute lg:inset-0 lg:h-svh">
         <SpecimenDetail specimen={specimen} />
       </div>

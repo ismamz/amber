@@ -30,7 +30,12 @@ export const Header = memo(function Header({ showLogo = false }: { showLogo?: bo
           rel="noreferrer"
           className="pointer-events-auto max-w-32 text-right text-[0.625rem] leading-tight tracking-wider underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4 sm:max-w-none sm:text-xs"
         >
-          Read the tutorial in Codrops <span aria-hidden="true">↗</span>
+          <span className="whitespace-nowrap sm:hidden">
+            Codrops Tutorial <span aria-hidden="true">↗</span>
+          </span>
+          <span className="hidden sm:inline">
+            Read the tutorial in Codrops <span aria-hidden="true">↗</span>
+          </span>
         </a>
         <a
           href="https://github.com/ismamz/amber"

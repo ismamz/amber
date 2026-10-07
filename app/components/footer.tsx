@@ -1,19 +1,21 @@
 export function Footer() {
   return (
-    <footer className="absolute inset-x-[2.5%] bottom-5 flex items-end justify-between gap-4 text-[8px] leading-tight tracking-wider text-muted sm:bottom-6 sm:text-[10px]">
-      <div>
-        <p>Amber Genetics ® / Research division</p>
-        <div className="mt-1 flex gap-6">
+    <footer className="absolute inset-x-[2.5%] bottom-[calc(1rem+env(safe-area-inset-bottom))] flex items-end justify-between gap-4 text-[10px] leading-tight tracking-wider text-muted sm:bottom-6">
+      <div className="w-full sm:w-auto">
+        <p className="hidden sm:block">Amber Genetics ® / Research division</p>
+        <div className="flex items-center justify-between gap-4 sm:mt-1 sm:justify-start sm:gap-6">
           <Link href="/credits.txt">Credits</Link>
-          <Link href="https://www.rudyvessup.com/jurassic-world-hidden-lab-ui">
-            Design inspiration
-          </Link>
-          <p>
+          <span className="hidden sm:inline">
+            <Link href="https://www.rudyvessup.com/jurassic-world-hidden-lab-ui">
+              Design inspiration
+            </Link>
+          </span>
+          <p className="whitespace-nowrap">
             Design & code by <Link href="https://isma.uy">isma</Link>
           </p>
         </div>
       </div>
-      <p className="text-right">
+      <p className="hidden text-right sm:block">
         <span className="block text-black">Scroll / drag / ← →</span>
         <span className="mt-1 hidden sm:block">
           Vite + React Router + Tailwind CSS + React Three Fiber + GSAP +{" "}

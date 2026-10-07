@@ -69,54 +69,13 @@ app/
 
 ## Transition engine
 
-One paused `gsap.core.Timeline` per navigation. The global choreography, every component recipe and the configured fallback write tweens onto it; the engine plays it, awaits it, then unmounts the outgoing page. The engine is `hyperkinetic`, installed from npm at the exact version in `package.json`; API and data shapes in its README and `dist/types.d.ts`.
+Before changing transition configuration, recipes, resources or lifecycle hooks, read the [official hyperkinetic docs](https://github.com/ismamz/hyperkinetic#readme). Check API and types against the exact version in `package.json` (`node_modules/hyperkinetic/README.md` and `dist/types.d.ts`); upstream may differ.
 
-Both pages render as siblings inside `[data-wrapper]` during the swap:
+Site wiring:
 
-```html
-<div data-wrapper>
-  <div data-page data-page-outgoing inert>…</div>
-  <div data-page data-page-incoming>…</div>
-</div>
-```
-
-On first load the page carries `data-page-initial` until `prepare()` is done; the site hides it with CSS meanwhile.
-
-The engine does not pin pages or reset scroll: the site does it in its hooks. Keep `<ScrollRestoration />` out of the app: it restores scroll while the outgoing page is still visible.
-
-**Order of a run**
-
-```
-NAVIGATE (or first load)   both pages mounted, tagged outgoing/incoming
-→ before(), beforeEnter()  sync, pre-paint
-→ prepare()                recipes + fallback, pre-paint
-→ await resources          both pages mounted, outgoing visible; timeout
-                           (5 s default) then onIssue, never indefinite
-→ prepare()                whatever registers before the timeline is built,
-                           as it registers
-→ exits                    fallback → persistent → recipes (groups measured)
-→ choreograph()            global effects + labels
-→ entrances                fallback → persistent → recipes, at their labels
-→ play & await tl
-→ complete(), afterEnter()
-→ unmount outgoing
-→ after()                  pre-paint, the old page is gone
-```
-
-First load runs the same thing with `initial: true`, no outgoing page and no exits; `<AnimatedOutlet initial={false}>` opts out. A new navigation mid-run kills the active timeline and the stale run bails; the next run gets `interrupted: true`.
-
-Per direction (`leave` / `enter`): function animates, `false` disables, omitted inherits the fallback. Labels belong to the choreography; recipes consume them via `enterAt`, and an unknown label throws. The choreography also gets `leaveEnd(group)`, the measured end of a group's exits, and `ready()`, which releases `useEnterReady()` before the timeline ends.
-
-**Hooks**
-
-- `usePageTransition(recipe)` — page-local recipe, scoped selectors, reverted on unmount.
-- `usePersistentTransition(recipe)` — same recipe for components navigation does not unmount; module-level registry, crosses the R3F boundary.
-- `useTransitionResource(load)` — return a promise while pending; declare it from a component that is already mounted.
-- `useEnterReady()` → boolean latch for intros outside the timeline.
-
-**Site wiring**
-
-`app/lib/transition.ts` is the choreography and the fallback. `app/lib/scene.ts` is the promise the lazy scene resolves; `root.tsx` registers it as a resource.
+- `app/lib/transition.ts`: choreography, fallback and scroll hooks.
+- `app/lib/scene.ts`: lazy-scene readiness promise; `app/root.tsx` registers it as a resource.
+- CSS hides `[data-page-initial]` until preparation. Keep `<ScrollRestoration />` out: it restores scroll while the outgoing page is visible.
 
 ## Motion & layering
 
