@@ -851,7 +851,13 @@ function Platform({ pathname, onSelect }: { pathname: string; onSelect: (index: 
     const warmup = () => {
       warming.current = true;
       void warm()
-        .then(dismiss)
+        .then(() => {
+          if (!warming.current) return;
+          // A resource timeout can start the page before this recipe registers.
+          // Recover behind the loader, unless a timeline already owns the pose.
+          if (!sceneReady.waiting && !moving.current) controller.current?.complete(pathname);
+          return dismiss();
+        })
         .then(() => {
           // Unmounted, or a navigation took over while we were compiling.
           if (!warming.current) return;
