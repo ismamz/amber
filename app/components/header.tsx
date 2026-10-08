@@ -25,7 +25,7 @@ export const Header = memo(function Header({ showLogo = false }: { showLogo?: bo
       </Link>
       <div className={`flex items-center gap-4 sm:gap-6 ${sceneIsReady ? "visible" : "invisible"}`}>
         <a
-          href="https://tympanus.net/codrops/"
+          href="https://tympanus.net/codrops/?p=123421"
           target="_blank"
           rel="noreferrer"
           className="pointer-events-auto max-w-32 text-right text-[0.625rem] leading-tight tracking-wider underline decoration-silver underline-offset-3 focus-visible:outline-2 focus-visible:outline-offset-4 sm:max-w-none sm:text-xs"
