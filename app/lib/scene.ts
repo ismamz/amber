@@ -10,6 +10,8 @@ const promise = new Promise<void>((resolve) => {
 
 export const sceneReady = {
   promise,
+  // The current page run may stop waiting before the lazy platform mounts.
+  waiting: true,
   subscribe: (listener: () => void) => {
     listeners.add(listener);
     return () => listeners.delete(listener);

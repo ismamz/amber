@@ -1,10 +1,12 @@
 import { gsap } from "gsap";
 import type { AnimatedOutletProps } from "hyperkinetic";
 
+import { sceneReady } from "@/lib/scene";
 import { specimenIndex } from "@/lib/specimens";
 
 export const config = {
   before: () => {
+    sceneReady.waiting = true;
     // React Router leaves history entries on "auto". Back/forward would restore
     // the offset before the first frame and fight the swap.
     history.scrollRestoration = "manual";
@@ -51,8 +53,8 @@ export const config = {
       );
     },
   },
-  // The scene is the only resource today. The timeout covers a browser
-  // without WebGL, whose canvas never reports ready.
+  // Bound the wait for the lazy scene, including model and shader preparation.
+  // A late platform restores its resting pose when this run has moved on.
   resources: {
     timeout: 5000,
     onIssue: ({ reason, error }) => {
@@ -60,6 +62,7 @@ export const config = {
     },
   },
   choreograph: ({ tl, current, next, initial, reduced, ready, leaveEnd }) => {
+    sceneReady.waiting = false;
     const at = (seconds: number) => (reduced ? 0 : seconds);
 
     // Every exit is on the timeline by now.

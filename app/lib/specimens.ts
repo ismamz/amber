@@ -125,6 +125,6 @@ export const indexAt = (angle: number) =>
 export const findSpecimen = (slug: string) => specimens.find((specimen) => specimen.slug === slug);
 
 export function specimenIndex(pathname: string) {
-  const slug = pathname.match(/^\/specimens\/([^/]+)$/)?.[1];
+  const slug = pathname.match(/^\/specimens\/([^/]+)\/?$/)?.[1];
   return slug ? specimens.findIndex((specimen) => specimen.slug === slug) : -1;
 }
