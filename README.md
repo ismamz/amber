@@ -10,6 +10,8 @@ _The demo is **Amber Genetics**, a fictional lab archive with a React Three Fibe
 
 Page transitions use [Hyperkinetic](https://github.com/ismamz/hyperkinetic), a React Router library for parallel page transitions on a shared GSAP timeline.
 
+Read the [Codrops tutorial](https://tympanus.net/codrops/2026/10/08/building-parallel-page-transitions-with-gsap-and-react-router/) to learn how the transitions were built.
+
 ## Stack
 
 - React Router v8 (SPA + prerender)
